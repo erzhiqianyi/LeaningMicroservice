@@ -43,8 +43,6 @@ eureka:
     register-with-eureka: false
     # 取消服务获取
     fetch-registry: false
-#    service-url:
-#      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka
   server:
     enable-self-preservation:  false
 
@@ -61,9 +59,9 @@ spring:
     name: registter-server
 
 ```
-nginx中修改配置，对注册中心进行转发
+nginx中修改配置，对注册中心及相应文件进行转发
 ```
-        location /register {
+        location /eureka/ {
                 proxy_pass  http://127.0.0.1:20000;  #pass到应用服务器
                 proxy_redirect     off;
                 proxy_set_header   Host             $host;
@@ -71,9 +69,51 @@ nginx中修改配置，对注册中心进行转发
                 proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
 
         }
+
+
+          location /eureka/css/ {
+                proxy_pass  http://127.0.0.1:20000/eureka/css/;  #首先pass到应用服务器
+                proxy_redirect     off;
+                proxy_set_header   Host             $host;
+                proxy_set_header   X-Real-IP        $remote_addr;
+                proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+
+        }
+
+        location /eureka/images/ {
+                proxy_pass  http://127.0.0.1:20000/eureka/images/;  #首先pass到应用服务器
+                proxy_redirect     off;
+                proxy_set_header   Host             $host;
+                proxy_set_header   X-Real-IP        $remote_addr;
+                proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+
+        }
+
+
+
+
+        location /eureka/js/ {
+                proxy_pass  http://127.0.0.1:20000/eureka/js/;  #首先pass到应用服务器
+                proxy_redirect     off;
+                proxy_set_header   Host             $host;
+                proxy_set_header   X-Real-IP        $remote_addr;
+                proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+
+        }
+
+        location /eureka/fonts/ {
+                proxy_pass  http://127.0.0.1:20000/eureka/fonts/;  #首先pass到应用服务器
+                proxy_redirect     off;
+                proxy_set_header   Host             $host;
+                proxy_set_header   X-Real-IP        $remote_addr;
+                proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+
+        }
+
+
 ```
 
-可以访问以下 [链接](https://erzhiqian.top/register/) 预览效果
+可以访问以下 [链接](https://erzhiqian.top/eureka/) 预览效果
 ```
-https://erzhiqian.top/register/
+https://erzhiqian.top/eureka/
 ```

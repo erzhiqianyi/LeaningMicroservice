@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: wechat-server
+
+server:
+  port: 20001
+
+eureka:
+  instance:
+    hostname: 192.168.0.88
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://192.168.0.88:20000/eureka
