@@ -60,7 +60,7 @@ spring:
 
 ```
 nginx中修改配置，对注册中心及相应文件进行转发
-```
+```conf
         location /eureka/ {
                 proxy_pass  http://127.0.0.1:20000;  #pass到应用服务器
                 proxy_redirect     off;
