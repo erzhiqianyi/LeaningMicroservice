@@ -1,10 +1,10 @@
 spring:
   application:
-    name: wechat-server
+    name: auth-server
 
 server:
-  # 指定端口在20001
-  port: 20001
+  # 指定端口在20002
+  port: 20002
 
 eureka:
   instance:
