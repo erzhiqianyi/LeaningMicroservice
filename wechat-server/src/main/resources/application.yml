@@ -3,7 +3,7 @@ spring:
     name: wechat-server
 
 server:
-  port: 20001
+  port: 20010
 
 eureka:
   instance:
@@ -12,4 +12,4 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://192.168.0.176:20000/eureka
+      defaultZone: http://192.168.0.176:20000/eureka/,http://192.168.0.176:20001/eureka/

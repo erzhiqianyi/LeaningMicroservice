@@ -8,14 +8,13 @@ eureka:
     # 取消服务获取
     fetch-registry: false
     serviceUrl:
-      defaultZone: http://192.168.0.176:20000/eureka/
+      defaultZone: http://192.168.0.176:20000/eureka/,http://192.168.0.176:20001/eureka/
   server:
     enable-self-preservation:  false
 
-server:
-  # 指定端口
-  port: 20000
 spring:
   application:
     # 配置微服务名称
     name: registter-server
+  profiles:
+    active: peer1
