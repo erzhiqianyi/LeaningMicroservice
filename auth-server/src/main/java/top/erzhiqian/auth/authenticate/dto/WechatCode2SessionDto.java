@@ -7,6 +7,4 @@ import lombok.Data;
 @AllArgsConstructor
 public class WechatCode2SessionDto {
     private String code;
-
-
 }

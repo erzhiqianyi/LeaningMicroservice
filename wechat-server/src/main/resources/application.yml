@@ -8,9 +8,9 @@ server:
 
 eureka:
   instance:
-    hostname: 192.168.0.88
+    hostname: 127.0.0.1
   client:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://192.168.0.88:20000/eureka
+      defaultZone: http://127.0.0.1:20000/eureka

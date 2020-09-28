@@ -11,5 +11,4 @@ public interface WechatFacade {
     @GetMapping("login/code")
     String loginByByCode(@SpringQueryMap WechatCode2SessionDto code);
 
-
 }
