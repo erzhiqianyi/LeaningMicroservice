@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: auth-server
+
+server:
+  # 指定端口在20002
+  port: 20002
+
+eureka:
+  instance:
+    hostname: 192.168.0.88
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://192.168.0.88:20000/eureka
+
+# 定义feign相关配置
+feign:
+  client:
+    config:
+      # default表示为全局配置
+      default:
+        # 设置feign日志级别
+        loggerLevel: full

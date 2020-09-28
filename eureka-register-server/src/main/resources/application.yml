@@ -1,20 +1,24 @@
 eureka:
   instance:
     # 指定服务治理中心服务器ip
-    hostname: 192.168.0.176
+    hostname: 192.168.0.88
   client:
     # 取消注册，服务自己是治理中心，开发环境取消注册
     register-with-eureka: false
     # 取消服务获取
     fetch-registry: false
     serviceUrl:
-      defaultZone: http://192.168.0.176:20000/eureka/,http://192.168.0.176:20001/eureka/
+      defaultZone: http://192.168.0.88:20000/eureka/
   server:
     enable-self-preservation:  false
 
+server:
+  # 指定端口
+  port: 20000
 spring:
   application:
     # 配置微服务名称
     name: registter-server
+
   profiles:
-    active: peer1
+    active:
