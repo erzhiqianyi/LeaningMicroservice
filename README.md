@@ -8,6 +8,7 @@
 - [搭建认证授权微服务](#搭建认证授权微服务)
 - [使用Openfeign调用微服务](#使用Openfeign调用微服务)
 - [搭建网关](#搭建网关)
+- [使用SpringBootAdmin监控微服务](#使用SpringBootAdmin监控微服务)
 - [实用命令](#实用命令)
   - [启动Spring Boot应用时指定配置文件](启动Spring Boot应用时指定配置文件])
 ## 搭建公网访问环境
@@ -233,6 +234,16 @@ public class WechatLoginController {
     }
 }
 ```
+
+
+## 使用Openfeign调用微服务
+
+## 搭建网关
+
+## 使用SpringBootAdmin监控微服务
+- 创建 ```Spring Boot Admin``` 服务端
+
+- 客户端注册到服务端
 
 ## 实用命令
 

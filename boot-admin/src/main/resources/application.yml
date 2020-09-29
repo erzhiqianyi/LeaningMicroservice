@@ -1,0 +1,7 @@
+server:
+  port: 50000
+
+spring:
+  application:
+    name: boot-admin
+
