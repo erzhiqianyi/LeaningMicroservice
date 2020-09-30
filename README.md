@@ -8,6 +8,7 @@
 - [搭建认证授权微服务](#搭建认证授权微服务)
 - [使用Openfeign调用微服务](#使用Openfeign调用微服务)
 - [搭建网关](#搭建网关)
+- [搭建服务配置中心](#搭建服务配置中心)
 - [使用SpringBootAdmin监控微服务](#使用SpringBootAdmin监控微服务)
 - [实用命令](#实用命令)
   - [启动Spring Boot应用时指定配置文件](启动Spring Boot应用时指定配置文件])
@@ -18,7 +19,7 @@
 
 
 ## 搭建服务治理中心
-
+使用  [Spring Cloud Eureka](https://github.com/spring-cloud/spring-cloud-netflix)
 - 创建项目
 使用 [spring initializr](https://start.spring.io/) 创建一个　SpringBoot 项目，添加 ```Eureka Server```,生成项目即可。
 
@@ -130,6 +131,8 @@ https://erzhiqian.top/eureka/
 
 - 启动多个服务服务治理中心 
 
+将服务治理中心在不同端口启动即可。
+
 ## 搭建小程序业务微服务
 小程序业务微服务主要用来处理微信相关业务，比如获取accessToken ,生成小程序码,推送消息等。 
 
@@ -237,8 +240,104 @@ public class WechatLoginController {
 
 
 ## 使用Openfeign调用微服务
+前面使用 ```Ribbon``` 直接调用其他微服务，每次都要注入 ```RestTemplate``` , 写参数，发送请求，解析结果。会有大量类似的代码。可以使用 [Spring Cloud OpenFeign](https://spring.io/projects/spring-cloud-openfeign) 来代替 ```Ribbon``` 调用微服务。 ```Spring Cloud OpenFeign``` 基于 [OpenFeign](https://github.com/OpenFeign/feign),集成了 ```Spring``` 相关组件，方便在```Spring``` 中调用。
+
+-  添加 ```Spring Cloud OpenFeign``` 依赖
+
+```js
+<dependency>
+  <groupId>org.springframework.cloud</groupId>
+  <artifactId>spring-cloud-starter-openfeign</artifactId>
+</dependency> 
+```
+
+- 配置```Spring Cloud OpenFeign```客户端扫描路径 
+项目基于领域驱动设计原则进行设计开发，调用其他微服务属于基础设施，放在基础设施模块。新建一个基础设施包 ```infrastructure``` ,再添加一个```Facade```，用来存放 ```Spring Count OpenFeign``` 客户端.
+在启动类上添加 ```EnableFeignClients``` 注解，配置客户端扫描路径
+```java
+@SpringBootApplication
+@EnableFeignClients(basePackages = "top.erzhiqian.auth.authenticate.infrastructure.facade")
+public class AuthServerApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(AuthServerApplication.class, args);
+    }
+
+}
+```
+
+- 编写```Spring Cloud OpenFeign``` 客户端
+
+```Spring Cloud OpenFeign``` 使用声明的方式来定义客户端，类似 ```Spring Mvc``` 接口定义方式，可以使用 ````Spring Mvc``` 相关注解。
+
+带```Url```参数的 ```Get```请求客户端定义如下
+```java
+@FeignClient("wechat-server")
+public interface WechatFacade {
+
+    @GetMapping("login/code")
+    String loginByByCode(@SpringQueryMap WechatCode2SessionDto code);
+}
+```
+
+```FeignClient``` 注解标记该类是 ```Feign``` 客户端，```value``` 值为对应微服务名字，及要请求的接口的所在微服务的```application.name```，要配合注册中心一起使用。
+客户端定义好后，直接注入客户端，调用相应方法即可调用微服务。
+
+```java
+@RestController
+@Log4j2
+public class WechatLoginController {
+
+
+    private WechatFacade wechatFacade;
+
+    public WechatLoginController(WechatFacade wechatFacade) {
+        this.wechatFacade = wechatFacade;
+    }
+
+    @GetMapping("/auth/login/wechat/code")
+    public String loginByWechatSessionCode(String code) {
+        log.info("去小程序服务进行授权 " + code);
+        String result = wechatFacade.loginByByCode(new WechatCode2SessionDto(code));
+        return result;
+    }
+}
+
+```
 
 ## 搭建网关
+
+使用 [Spring Cloud Gateway](https://spring.io/projects/spring-cloud-gateway) 搭建网关，提供网关服务，统一入口，外部请求先经过网关，先验证请求，验证通过后再分发到源服务器。对外只暴漏网关，其他服务不对外开发，只能内网访问。
+
+- 搭建网关项目 
+
+使用 [spring initializr](https://start.spring.io/) 创建一个　SpringBoot 项目，添加 ```Spring Clound GateWay```,生成项目即可。
+
+- 使用配置文件配置网关
+
+```Spring Clound Gateway``` 可以使用配置文件或代码来配置路由，先使用配置文件，简单配置一个路由。
+
+前面已经写了一个 [微信授权码登录接口](#搭建认证授权微服务) , 现在用网关来配置接口访问路径。
+配置文件如下:
+
+```yml
+spring:
+ cloud:
+    gateway:
+      # 配置路径
+      routes:
+        - id: auth-server
+          # 转发uri
+          uri: http://127.0.0.1:40000/
+          #  断言配置
+          predicates:
+            # path断言
+            - Path=/auth/**
+```
+
+使用 ```Path``` 断言，将 ```auth```开头的路径都转发到认证授权微服务。
+
+- nginx配置网关api
 
 ## 使用SpringBootAdmin监控微服务
 - 创建 ```Spring Boot Admin``` 服务端
