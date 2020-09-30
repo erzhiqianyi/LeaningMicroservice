@@ -338,6 +338,26 @@ spring:
 使用 ```Path``` 断言，将 ```auth```开头的路径都转发到认证授权微服务。
 
 - nginx配置网关api
+配置网关域名,使用二级域名配置网关。
+```js
+server {
+        listen 443;
+        listen [::]:443;
+
+        server_name api.erzhiqian.top;
+
+
+        location / {
+                proxy_pass  http://127.0.0.1:20000/;  #首先pass到应用服务器
+                proxy_redirect     off;
+                proxy_set_header   Host             $host;
+                proxy_set_header   X-Real-IP        $remote_addr;
+                proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+        }
+}
+```
+
+- 动态添加路由
 
 ## 使用SpringBootAdmin监控微服务
 - 创建 ```Spring Boot Admin``` 服务端
