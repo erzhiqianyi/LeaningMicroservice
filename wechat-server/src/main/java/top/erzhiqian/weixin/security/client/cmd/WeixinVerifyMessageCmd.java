@@ -1,4 +1,4 @@
-package top.erzhiqian.wechat.security.client.cmd;
+package top.erzhiqian.weixin.security.client.cmd;
 
 import lombok.Data;
 
@@ -13,12 +13,12 @@ public class WeixinVerifyMessageCmd {
     /**
      * 时间戳
      */
-    private Long timestamp;
+    private String timestamp;
 
     /**
      * 随机数
      */
-    private Integer nonce;
+    private String nonce;
 
     /**
      * 随机字符串

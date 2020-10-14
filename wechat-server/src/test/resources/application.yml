@@ -5,6 +5,23 @@ server:
 spring:
   application:
     name: wechat-server
+  datasource:
+    url: jdbc:log4jdbc:mysql://127.0.0.1:3306/weixin?useSSL=false&allowPublicKeyRetrieval=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+    driverClassName: net.sf.log4jdbc.DriverSpy
+    maximum-pool-size: 100
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database: mysql
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        use_sql_comments: true
+        format_sql: true
+
 
 management:
   endpoints:

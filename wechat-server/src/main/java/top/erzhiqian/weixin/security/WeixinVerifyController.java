@@ -1,10 +1,12 @@
-package top.erzhiqian.wechat.security;
+package top.erzhiqian.weixin.security;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-import top.erzhiqian.wechat.security.client.cmd.WeixinVerifyMessageCmd;
+import top.erzhiqian.weixin.security.app.ServerVerifyApp;
+import top.erzhiqian.weixin.security.client.cmd.WeixinVerifyMessageCmd;
+import top.erzhiqian.weixin.security.domain.entity.WeixinApp;
 
 /**
  * 微信消息推送配置和服务器配置,用于验证服务器
@@ -18,6 +20,15 @@ import top.erzhiqian.wechat.security.client.cmd.WeixinVerifyMessageCmd;
 @RestController
 @Log4j2
 public class WeixinVerifyController {
+
+
+    private ServerVerifyApp verifyApp;
+
+
+    public WeixinVerifyController(ServerVerifyApp verifyApp) {
+        this.verifyApp = verifyApp;
+    }
+
     /**
      * 验证来自微信服务器消息
      * 2020/10/14 8:36
@@ -38,6 +49,12 @@ public class WeixinVerifyController {
 
     @GetMapping("weixin/message/verify/{appId}")
     public String verifyWeixinMessage(@PathVariable("appId") String appId, WeixinVerifyMessageCmd cmd) {
-        return cmd.getEchostr();
+        WeixinApp app = WeixinApp.app(appId);
+        boolean validMessage = verifyApp.checkMessage(app, cmd);
+        if (validMessage) {
+            return cmd.getEchostr();
+        } else {
+            return cmd.getSignature();
+        }
     }
 }

@@ -1,4 +1,4 @@
-package top.erzhiqian.wechat.security;
+package top.erzhiqian.weixin.security;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import top.erzhiqian.wechat.security.client.cmd.WeixinVerifyMessageCmd;
+import top.erzhiqian.weixin.security.client.cmd.WeixinVerifyMessageCmd;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -36,8 +36,8 @@ public class WeixinVerifyControllerTest {
         WeixinVerifyMessageCmd cmd = new WeixinVerifyMessageCmd();
         cmd.setSignature("432");
         cmd.setEchostr("234");
-        cmd.setTimestamp(System.currentTimeMillis());
-        cmd.setNonce(3343);
+        cmd.setTimestamp(String.valueOf(System.currentTimeMillis()));
+        cmd.setNonce("3434");
         verifyMessageUrl = verifyMessageUrl + appId;
         mockMvc.perform(MockMvcRequestBuilders.get(verifyMessageUrl)
                 .param("signature", cmd.getSignature())
