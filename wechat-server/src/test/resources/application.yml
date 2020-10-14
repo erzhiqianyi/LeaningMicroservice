@@ -1,0 +1,13 @@
+server:
+  # 指定端口在40001
+  port: 40001
+
+spring:
+  application:
+    name: wechat-server
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
