@@ -2,12 +2,15 @@ package top.erzhiqian.weixin.security;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import top.erzhiqian.weixin.security.app.ServerVerifyApp;
 import top.erzhiqian.weixin.security.client.cmd.WeixinVerifyMessageCmd;
+import top.erzhiqian.weixin.security.client.weixin.WeixinMessage;
 import top.erzhiqian.weixin.security.domain.entity.WeixinAppId;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
+import java.io.IOException;
 
 /**
  * 微信消息推送配置和服务器配置,用于验证服务器,成为开发者
@@ -20,13 +23,13 @@ import top.erzhiqian.weixin.security.domain.entity.WeixinAppId;
  */
 @RestController
 @Log4j2
-public class WeixinVerifyController {
+public class WeixinMessageController {
 
 
     private ServerVerifyApp verifyApp;
 
 
-    public WeixinVerifyController(ServerVerifyApp verifyApp) {
+    public WeixinMessageController(ServerVerifyApp verifyApp) {
         this.verifyApp = verifyApp;
     }
 
@@ -50,12 +53,31 @@ public class WeixinVerifyController {
 
     @GetMapping("app/weixin/{appId}")
     public String verifyWeixinMessage(@PathVariable("appId") String appId,@Validated WeixinVerifyMessageCmd cmd) {
+        log.info("请求参数 " + cmd);
         WeixinAppId app = WeixinAppId.app(appId);
         boolean validMessage = verifyApp.checkMessage(app, cmd);
+        log.info("校验结果"+validMessage);
         if (validMessage) {
             return cmd.getEchostr();
         } else {
             return cmd.getSignature();
         }
+    }
+
+
+
+
+    /**
+     * 接收微信消息
+     *
+     * @param appId 小程序appId 或公众号 appId
+     * @author 二之前一
+     */
+
+
+    @PostMapping("app/weixin/{appId}")
+    public String processWeixinMessage(@PathVariable("appId") String appId, @RequestBody  WeixinMessage message) throws IOException {
+        log.info(message);
+       return "success";
     }
 }

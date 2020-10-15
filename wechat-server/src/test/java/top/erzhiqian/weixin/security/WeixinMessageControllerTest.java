@@ -23,7 +23,7 @@ import java.util.stream.Stream;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class WeixinVerifyControllerTest {
+public class WeixinMessageControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

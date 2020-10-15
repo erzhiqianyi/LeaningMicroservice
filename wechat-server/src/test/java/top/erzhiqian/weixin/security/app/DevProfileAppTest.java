@@ -30,8 +30,8 @@ public class DevProfileAppTest {
     @Before
     public void init() {
         appProfile = new String[]{
-                "wx3776b9225ad085af",
-                "https://erzhiqian.top/weixin/app/weixin/wx3776b9225ad085af",
+                "wx7886d971aa7bcde7",
+                "https://erzhiqian.top/weixin/app/weixin/wx7886d971aa7bcde7",
                 LetterOrDigitsString.ofLength(32).getValue(),
                 LetterOrDigitsString.ofLength(43).getValue(),
                 MessageEncodingKey.EncodingType.ENCRYPT.getCode(),

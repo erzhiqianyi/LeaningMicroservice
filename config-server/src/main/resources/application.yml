@@ -12,7 +12,7 @@ spring:
   boot:
     admin:
       client:
-        url: http://localhost:50000
+        url: http://localhost:50000/admin
 
 management:
   endpoints:
