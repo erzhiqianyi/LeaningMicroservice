@@ -1,6 +1,8 @@
 server:
   # 指定端口在40001
   port: 40001
+  servlet:
+    context-path: /weixin
 
 spring:
   application:

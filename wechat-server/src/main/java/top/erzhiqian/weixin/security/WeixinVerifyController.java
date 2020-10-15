@@ -1,6 +1,7 @@
 package top.erzhiqian.weixin.security;
 
 import lombok.extern.log4j.Log4j2;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,7 +49,7 @@ public class WeixinVerifyController {
      */
 
     @GetMapping("app/weixin/{appId}")
-    public String verifyWeixinMessage(@PathVariable("appId") String appId, WeixinVerifyMessageCmd cmd) {
+    public String verifyWeixinMessage(@PathVariable("appId") String appId,@Validated WeixinVerifyMessageCmd cmd) {
         WeixinAppId app = WeixinAppId.app(appId);
         boolean validMessage = verifyApp.checkMessage(app, cmd);
         if (validMessage) {
