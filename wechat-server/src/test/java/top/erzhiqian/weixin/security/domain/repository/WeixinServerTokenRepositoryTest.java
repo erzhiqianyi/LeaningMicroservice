@@ -4,13 +4,11 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import top.erzhiqian.weixin.security.domain.entity.WeixinApp;
-import top.erzhiqian.weixin.security.domain.valueobject.ICheckMessageToken;
-import top.erzhiqian.weixin.security.infrastructure.po.WeiXinMessagePushSettingPO;
+import top.erzhiqian.weixin.security.domain.entity.WeixinAppId;
+import top.erzhiqian.weixin.security.domain.valueobject.IWeixinServerToken;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -18,24 +16,24 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Log4j2
-public class WeixinServerVerifyTokenRepositoryTest {
+public class WeixinServerTokenRepositoryTest {
 
     @Autowired
-    private WeixinServerVerifyTokenRepository repository;
+    private WeixinServerTokenRepository repository;
 
     private String appId;
 
-    private WeixinApp weixinApp;
+    private WeixinAppId weixinAppId;
 
     @Before
     public void init() {
         appId = "234325";
-        weixinApp = WeixinApp.app(appId);
+        weixinAppId = WeixinAppId.app(appId);
     }
 
     @Test
     public void findServerVerifyToken() {
-        ICheckMessageToken token = repository.findServerVerifyToken(weixinApp);
+        IWeixinServerToken token = repository.findWeixinServerToken(weixinAppId);
         assertNotNull(token);
     }
 

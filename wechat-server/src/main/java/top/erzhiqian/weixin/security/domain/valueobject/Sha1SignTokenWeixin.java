@@ -6,10 +6,9 @@ import top.erzhiqian.weixin.security.client.cmd.WeixinVerifyMessageCmd;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Sha1SignToken extends SignToken implements ICheckMessageToken {
+public class Sha1SignTokenWeixin extends ServerToken implements IWeixinServerToken {
 
-
-    public Sha1SignToken(String token) {
+    public Sha1SignTokenWeixin(String token) {
         super(token);
     }
 

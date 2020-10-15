@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import top.erzhiqian.weixin.security.app.ServerVerifyApp;
 import top.erzhiqian.weixin.security.client.cmd.WeixinVerifyMessageCmd;
-import top.erzhiqian.weixin.security.domain.entity.WeixinApp;
+import top.erzhiqian.weixin.security.domain.entity.WeixinAppId;
 
 /**
- * 微信消息推送配置和服务器配置,用于验证服务器
+ * 微信消息推送配置和服务器配置,用于验证服务器,成为开发者
  * 具体参考微信文档
  * <a href="https://developers.weixin.qq.com/miniprogram/dev/framework/server-ability/message-push.html">消息推送</a>
  * <a href="https://developers.weixin.qq.com/doc/offiaccount/Getting_Started/Overview.html">微信公众平台开发概述</a>
@@ -47,9 +47,9 @@ public class WeixinVerifyController {
      * @author 二之前一
      */
 
-    @GetMapping("weixin/message/verify/{appId}")
+    @GetMapping("app/weixin/{appId}")
     public String verifyWeixinMessage(@PathVariable("appId") String appId, WeixinVerifyMessageCmd cmd) {
-        WeixinApp app = WeixinApp.app(appId);
+        WeixinAppId app = WeixinAppId.app(appId);
         boolean validMessage = verifyApp.checkMessage(app, cmd);
         if (validMessage) {
             return cmd.getEchostr();
