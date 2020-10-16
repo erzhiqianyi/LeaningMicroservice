@@ -76,6 +76,10 @@ public enum WeixinMessageType {
 
     }
 
+    public static boolean isEventMsg(WeixinMessageType msgType) {
+        return EVENT == msgType;
+    }
+
     public String getCode() {
         return code;
     }
@@ -86,5 +90,7 @@ public enum WeixinMessageType {
 
 
     public abstract <T> T createContent(WeixinMessageCmd cmd);
+
+
 }
 

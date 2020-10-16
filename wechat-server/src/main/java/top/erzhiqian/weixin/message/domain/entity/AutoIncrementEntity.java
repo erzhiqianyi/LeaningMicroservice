@@ -20,4 +20,8 @@ public class AutoIncrementEntity {
         }
         this.id = id;
     }
+
+    public void saveId(Long id){
+       setId(id);
+    }
 }

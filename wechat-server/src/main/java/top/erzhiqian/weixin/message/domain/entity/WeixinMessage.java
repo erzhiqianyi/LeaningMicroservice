@@ -13,11 +13,12 @@ public class WeixinMessage extends AutoIncrementEntity {
 
     private final WeixinAppId appId;
 
-    private final WeixinMsgId msgId;
+    private WeixinMsgId msgId;
+
+    private final WeixinMessageType msgType;
 
     private Long createTime;
 
-    private WeixinMessageType msgType;
 
     private WeixinAppId toUserName;
 
@@ -26,28 +27,25 @@ public class WeixinMessage extends AutoIncrementEntity {
     private MessageStatus status;
 
 
-    private WeixinMessage(WeixinAppId app, WeixinMsgId msgId) {
-        if (null == app || null == msgId) {
+    private WeixinMessage(WeixinAppId app, WeixinMessageType msgType, WeixinMsgId msgId) {
+        if (null == app || null == msgType) {
             throw new IllegalArgumentException("illegal message.");
         }
         this.appId = new WeixinAppId(app.appId());
+        this.msgType = msgType;
         this.msgId = new WeixinMsgId(msgId.id());
+
 
     }
 
 
-    public static WeixinMessage crateEmptyMessage(WeixinAppId app, WeixinMsgId msgId) {
-        WeixinMessage message = new WeixinMessage(app, msgId);
+    public static WeixinMessage crateEmptyMessage(WeixinAppId app, WeixinMessageType type, WeixinMsgId msgId) {
+        WeixinMessage message = new WeixinMessage(app, type, msgId);
         return message;
     }
 
     public WeixinMessage createAt(Long createTime) {
         setCreateTime(createTime);
-        return this;
-    }
-
-    public WeixinMessage messageType(String messageType) {
-        setMsgType(messageType);
         return this;
     }
 
@@ -84,15 +82,15 @@ public class WeixinMessage extends AutoIncrementEntity {
         }
     }
 
-    private void setMsgType(String msgType) {
-        this.msgType = WeixinMessageType.getMessageType(msgType);
-    }
-
     private void setToUserName(String toUserName) {
         this.toUserName = new WeixinAppId(toUserName);
     }
 
     private void setFromUserName(String fromUserName) {
         this.fromUserName = new WeixinUserId(fromUserName);
+    }
+
+    public WeixinMessageType msgType() {
+        return msgType;
     }
 }

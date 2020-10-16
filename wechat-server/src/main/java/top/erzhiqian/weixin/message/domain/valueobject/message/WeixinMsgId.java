@@ -1,21 +1,21 @@
 package top.erzhiqian.weixin.message.domain.valueobject.message;
 
 import lombok.ToString;
-import org.springframework.util.StringUtils;
 
 @ToString
 public class WeixinMsgId {
 
-    private final String id;
+    private final Long id;
 
-    public WeixinMsgId(String id) {
-        if (StringUtils.isEmpty(id)) {
-            throw new IllegalArgumentException(" msg  id can't be null");
+    public WeixinMsgId(Long id) {
+        if (null ==  id) {
+            this.id = System.currentTimeMillis();
+        }else {
+            this.id = id;
         }
-        this.id = id;
     }
 
-    public String id() {
+    public Long id() {
         return id;
     }
 }

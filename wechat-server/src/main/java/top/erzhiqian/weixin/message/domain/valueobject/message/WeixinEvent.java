@@ -2,12 +2,14 @@ package top.erzhiqian.weixin.message.domain.valueobject.message;
 
 
 import lombok.Getter;
+import lombok.ToString;
 import org.springframework.util.StringUtils;
 
 import java.util.Optional;
 import java.util.stream.Stream;
 
 @Getter
+@ToString
 public class WeixinEvent {
 
     private final Event event;

@@ -7,7 +7,7 @@ import top.erzhiqian.weixin.spring.BeanFactory;
 public interface IMessageProcessors<T> {
     String PROCESSOR_SUFFIX = "MessageProcessors";
 
-    void processMessage(WeixinMessage message, T body);
+    void processMessage(WeixinMessage message, T messageBody);
 
     static IMessageProcessors findMessageProcessors(WeixinMessageType messageType) {
         if (null == messageType) {

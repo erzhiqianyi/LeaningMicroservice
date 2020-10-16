@@ -1,7 +1,9 @@
 package top.erzhiqian.weixin.message.domain.valueobject;
 
+import lombok.ToString;
 import org.springframework.util.StringUtils;
 
+@ToString
 public class UrlLink {
 
     private final String url;

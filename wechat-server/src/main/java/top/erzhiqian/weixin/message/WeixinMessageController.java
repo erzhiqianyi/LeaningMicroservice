@@ -1,5 +1,6 @@
 package top.erzhiqian.weixin.message;
 
+import com.alibaba.fastjson.JSON;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -78,6 +79,7 @@ public class WeixinMessageController {
 
     @PostMapping("app/weixin/{appId}")
     public String processWeixinMessage(@PathVariable("appId") String appId, @RequestBody WeixinMessageCmd message) throws IOException {
+        log.info(appId + "|微信消息参数|" + JSON.toJSONString(message));
         //todo 使用拦截器校验app状态和数据解密
         WeixinAppId app = WeixinAppId.app(appId);
         messageProcessApp.processMessage(app, message);

@@ -13,7 +13,7 @@ public class TextMessageProcessors implements IMessageProcessors<TextMessage> {
 
 
     @Override
-    public void processMessage(WeixinMessage message, TextMessage body) {
-
+    public void processMessage(WeixinMessage message, TextMessage textMessage) {
+        log.info("处理文本消息 " + textMessage);
     }
 }

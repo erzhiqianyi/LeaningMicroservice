@@ -1,7 +1,9 @@
 package top.erzhiqian.weixin.message.domain.valueobject.message;
 
+import lombok.ToString;
 import org.springframework.util.StringUtils;
 
+@ToString
 public class WeixinMediaId {
     private final String id;
 

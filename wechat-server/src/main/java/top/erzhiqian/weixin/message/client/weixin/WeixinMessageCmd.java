@@ -35,7 +35,7 @@ public class WeixinMessageCmd {
      * 消息id，64位整型
      */
     @JacksonXmlProperty(localName = "MsgId")
-    private String msgId;
+    private Long msgId;
 
     /**
      * 文本消息内容
