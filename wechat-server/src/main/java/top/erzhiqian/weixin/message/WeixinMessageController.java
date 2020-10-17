@@ -51,6 +51,7 @@ public class WeixinMessageController {
      * </p>
      *
      * @param appId 小程序appId 或公众号 appId
+     * @return echostr 成功原路返回 echostr
      * @author 二之前一
      */
 

@@ -1,6 +1,7 @@
 package top.erzhiqian.weixin.message.domain.entity;
 
 import lombok.ToString;
+import top.erzhiqian.weixin.core.domain.entity.AutoIncrementEntity;
 import top.erzhiqian.weixin.message.client.weixin.WeixinMessageCmd;
 import top.erzhiqian.weixin.message.domain.valueobject.WeixinAppId;
 import top.erzhiqian.weixin.message.domain.valueobject.WeixinUserId;

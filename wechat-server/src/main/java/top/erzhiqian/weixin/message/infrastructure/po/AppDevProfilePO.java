@@ -1,6 +1,7 @@
 package top.erzhiqian.weixin.message.infrastructure.po;
 
 import lombok.Data;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -9,6 +10,7 @@ import java.time.Instant;
 @Data
 @Table(name = AppDevProfilePO.TABLE_NAME)
 @Entity
+@DynamicUpdate
 public class AppDevProfilePO {
 
     public static final String TABLE_NAME = "app_dev_profile";

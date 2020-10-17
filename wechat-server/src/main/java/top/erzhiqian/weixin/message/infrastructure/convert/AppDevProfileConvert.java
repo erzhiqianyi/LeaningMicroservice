@@ -23,8 +23,8 @@ public class AppDevProfileConvert {
     }
 
 
-    public AppDevProfilePO convertToPO(AppDevProfile profile) {
-        AppDevProfilePO po = new AppDevProfilePO();
+    public AppDevProfilePO convertToPO(AppDevProfile profile, AppDevProfilePO original) {
+        AppDevProfilePO po = null == original ? new AppDevProfilePO() : original;
         po.setId(profile.id());
         if (null != profile.id()) {
             po.setLastModified(Instant.now());

@@ -36,8 +36,9 @@ public class LetterOrDigitsStringHelper {
 
     /**
      * 判断数字是否是大小写或数字
+     *
      * 2020/10/15 8:55
-     * 二之前一
+     * @author 二之前一
      */
     public static boolean isLetterOrDigits(int c) {
         return Character.isLowerCase(c) || Character.isUpperCase(c) || Character.isDigit(c);

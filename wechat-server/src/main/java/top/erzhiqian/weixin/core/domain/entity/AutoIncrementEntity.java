@@ -1,4 +1,4 @@
-package top.erzhiqian.weixin.message.domain.entity;
+package top.erzhiqian.weixin.core.domain.entity;
 
 public class AutoIncrementEntity {
     protected Long id;

@@ -41,15 +41,21 @@ public class AppDevProfileRepositoryAdapt implements AppDevProfileRepository {
 
     @Override
     public void saveProfile(AppDevProfile profile) {
-        AppDevProfilePO po = convert.convertToPO(profile);
-        if (null != profile.id()) {
-            po.setLastModified(Instant.now());
-        } else {
-            po.setCreateAt(Instant.now());
-            po.setLastModified(Instant.now());
-        }
-        po.setAppId(profile.appId());
-
+        AppDevProfilePO original = selectById(profile.id());
+        AppDevProfilePO po = convert.convertToPO(profile, original);
         jdcRepository.save(po);
+    }
+
+    private AppDevProfilePO selectById(Long id) {
+        if (null != id) {
+            Optional<AppDevProfilePO> optional = jdcRepository.findById(id);
+            if (optional.isPresent()) {
+                return optional.get();
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
     }
 }

@@ -27,9 +27,10 @@ public class DevProfileAppTest {
 
     @Before
     public void init() {
+        Long now = System.currentTimeMillis();
         appProfile = new String[]{
-                "wx7886d971aa7bcde7",
-                "https://erzhiqian.top/weixin/app/weixin/wx7886d971aa7bcde7",
+                "wx7886d971aa7bcde7" + now,
+                "https://erzhiqian.top/weixin/app/weixin/wx7886d971aa7bcde7" + now,
                 LetterOrDigitsString.ofLength(32).getValue(),
                 LetterOrDigitsString.ofLength(43).getValue(),
                 MessageEncodingKey.EncodingType.ENCRYPT.getCode(),
