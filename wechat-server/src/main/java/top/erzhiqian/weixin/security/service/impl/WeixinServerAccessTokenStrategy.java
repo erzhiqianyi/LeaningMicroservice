@@ -10,7 +10,7 @@ import top.erzhiqian.weixin.security.dto.AccessTokenDTO;
 
 import java.util.Optional;
 
-@Service
+@Service("weixinRefreshAccessToken")
 public class WeixinServerAccessTokenStrategy implements IAccessTokenStrategy {
 
     @Override

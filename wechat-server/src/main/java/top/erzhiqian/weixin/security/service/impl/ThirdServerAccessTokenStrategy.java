@@ -7,7 +7,7 @@ import top.erzhiqian.weixin.security.dto.AccessTokenDTO;
 
 import java.util.Optional;
 
-@Service
+@Service("thirdRefreshAccessToken")
 public class ThirdServerAccessTokenStrategy implements IAccessTokenStrategy {
 
     @Override

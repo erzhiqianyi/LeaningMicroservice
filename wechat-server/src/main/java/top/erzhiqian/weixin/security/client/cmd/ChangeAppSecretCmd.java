@@ -2,6 +2,7 @@ package top.erzhiqian.weixin.security.client.cmd;
 
 import lombok.Data;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
 @Data

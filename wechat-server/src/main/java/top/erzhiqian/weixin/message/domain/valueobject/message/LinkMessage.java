@@ -2,7 +2,7 @@ package top.erzhiqian.weixin.message.domain.valueobject.message;
 
 import lombok.Getter;
 import lombok.ToString;
-import top.erzhiqian.weixin.message.domain.valueobject.UrlLink;
+import top.erzhiqian.weixin.lang.UrlLink;
 
 @Getter
 @ToString

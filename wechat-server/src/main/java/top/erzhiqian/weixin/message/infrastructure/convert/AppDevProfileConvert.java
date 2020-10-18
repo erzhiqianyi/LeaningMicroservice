@@ -26,11 +26,12 @@ public class AppDevProfileConvert {
     public AppDevProfilePO convertToPO(AppDevProfile profile, AppDevProfilePO original) {
         AppDevProfilePO po = null == original ? new AppDevProfilePO() : original;
         po.setId(profile.id());
+        po.setAppId(profile.appId());
         if (null != profile.id()) {
-            po.setLastModified(Instant.now());
+            po.setLastModified(System.currentTimeMillis());
         } else {
-            po.setCreateAt(Instant.now());
-            po.setLastModified(Instant.now());
+            po.setCreateAt(System.currentTimeMillis());
+            po.setLastModified(System.currentTimeMillis());
         }
         po.setServerUrl(profile.getUrl());
         po.setServerToken(profile.getToken());

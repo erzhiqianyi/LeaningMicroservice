@@ -25,9 +25,9 @@ public class AppSecretPO {
     @Column(columnDefinition = "varchar(255) not null comment '公众号或小程序appSecret' ")
     private String appSecret;
 
-    private Instant createAt;
+    private Long createAt;
 
-    private Instant lastModified;
+    private Long lastModified;
 
 
 

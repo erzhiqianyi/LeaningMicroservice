@@ -38,9 +38,9 @@ public class AppDevProfilePO {
     @Column(columnDefinition = "varchar(30) not null comment '消息格式类型' ")
     private String dataType;
 
-    private Instant createAt;
+    private Long createAt;
 
-    private Instant lastModified;
+    private Long lastModified;
 
 
 }

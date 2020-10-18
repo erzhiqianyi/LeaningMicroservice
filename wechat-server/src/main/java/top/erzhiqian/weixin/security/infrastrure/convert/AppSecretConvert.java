@@ -12,10 +12,10 @@ public class AppSecretConvert {
     public AppSecretPO convertToPO(AppSecret appSecret, AppSecretPO original) {
         AppSecretPO po = null == original ? new AppSecretPO() : original;
         if (null != appSecret.id()) {
-            po.setLastModified(Instant.now());
+            po.setLastModified(System.currentTimeMillis());
         } else {
-            po.setCreateAt(Instant.now());
-            po.setLastModified(Instant.now());
+            po.setCreateAt(System.currentTimeMillis());
+            po.setLastModified(System.currentTimeMillis());
         }
         po.setAppId(appSecret.getApp().appId());
         po.setAppSecret(appSecret.getAppSecret().secret());
