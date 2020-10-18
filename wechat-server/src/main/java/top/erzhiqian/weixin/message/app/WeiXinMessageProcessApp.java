@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 import top.erzhiqian.weixin.message.client.weixin.WeixinMessageCmd;
 import top.erzhiqian.weixin.message.domain.entity.WeixinMessage;
 import top.erzhiqian.weixin.message.domain.repository.WeixinMessageRepository;
-import top.erzhiqian.weixin.message.domain.valueobject.WeixinAppId;
+import top.erzhiqian.weixin.lang.WeixinAppId;
 import top.erzhiqian.weixin.message.domain.valueobject.message.WeixinMessageType;
 import top.erzhiqian.weixin.message.domain.valueobject.message.WeixinMsgId;
 

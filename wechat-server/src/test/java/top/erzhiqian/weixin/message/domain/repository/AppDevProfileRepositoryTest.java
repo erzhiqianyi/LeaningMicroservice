@@ -11,7 +11,7 @@ import top.erzhiqian.weixin.lang.LetterOrDigitsString;
 import top.erzhiqian.weixin.message.client.cmd.OpenAppDevProfileCmd;
 import top.erzhiqian.weixin.message.client.vo.AppDevProfileVO;
 import top.erzhiqian.weixin.message.domain.entity.AppDevProfile;
-import top.erzhiqian.weixin.message.domain.valueobject.WeixinAppId;
+import top.erzhiqian.weixin.lang.WeixinAppId;
 import top.erzhiqian.weixin.message.domain.valueobject.MessageDataType;
 import top.erzhiqian.weixin.message.domain.valueobject.MessageEncodingKey;
 

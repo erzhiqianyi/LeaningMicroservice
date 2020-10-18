@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import top.erzhiqian.weixin.message.domain.valueobject.WeixinAppId;
+import top.erzhiqian.weixin.lang.WeixinAppId;
 import top.erzhiqian.weixin.security.client.cmd.BusinessStrategySetting;
 import top.erzhiqian.weixin.security.client.vo.BusinessStrategyVO;
 import top.erzhiqian.weixin.security.domain.valueobject.BusinessStrategyEnum;

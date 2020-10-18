@@ -3,7 +3,7 @@ package top.erzhiqian.weixin.message.infrastructure.adapt;
 import org.springframework.stereotype.Service;
 import top.erzhiqian.weixin.message.domain.entity.WeixinMessage;
 import top.erzhiqian.weixin.message.domain.repository.WeixinMessageRepository;
-import top.erzhiqian.weixin.message.domain.valueobject.WeixinAppId;
+import top.erzhiqian.weixin.lang.WeixinAppId;
 import top.erzhiqian.weixin.message.domain.valueobject.message.WeixinMessageType;
 import top.erzhiqian.weixin.message.domain.valueobject.message.WeixinMsgId;
 

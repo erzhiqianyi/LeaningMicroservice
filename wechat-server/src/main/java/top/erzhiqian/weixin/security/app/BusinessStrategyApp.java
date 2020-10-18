@@ -1,7 +1,7 @@
 package top.erzhiqian.weixin.security.app;
 
 import org.springframework.stereotype.Component;
-import top.erzhiqian.weixin.message.domain.valueobject.WeixinAppId;
+import top.erzhiqian.weixin.lang.WeixinAppId;
 import top.erzhiqian.weixin.security.client.cmd.BusinessStrategySetting;
 import top.erzhiqian.weixin.security.client.vo.BusinessStrategyVO;
 import top.erzhiqian.weixin.security.domain.entity.AppBusinessStrategy;

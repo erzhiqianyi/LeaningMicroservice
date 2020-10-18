@@ -1,7 +1,7 @@
 package top.erzhiqian.weixin.security.app;
 
 import org.springframework.stereotype.Component;
-import top.erzhiqian.weixin.message.domain.valueobject.WeixinAppId;
+import top.erzhiqian.weixin.lang.WeixinAppId;
 import top.erzhiqian.weixin.security.client.cmd.ChangeAppSecretCmd;
 import top.erzhiqian.weixin.security.domain.entity.AppSecret;
 import top.erzhiqian.weixin.security.domain.repository.AppSecretRepository;

@@ -3,7 +3,7 @@ package top.erzhiqian.weixin.security.domain.entity;
 import lombok.Getter;
 import org.springframework.util.StringUtils;
 import top.erzhiqian.weixin.core.domain.entity.AutoIncrementEntity;
-import top.erzhiqian.weixin.message.domain.valueobject.WeixinAppId;
+import top.erzhiqian.weixin.lang.WeixinAppId;
 import top.erzhiqian.weixin.security.domain.valueobject.AppSecretString;
 
 @Getter

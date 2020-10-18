@@ -1,7 +1,7 @@
 package top.erzhiqian.weixin.security.infrastrure.adapt;
 
 import org.springframework.stereotype.Service;
-import top.erzhiqian.weixin.message.domain.valueobject.WeixinAppId;
+import top.erzhiqian.weixin.lang.WeixinAppId;
 import top.erzhiqian.weixin.security.domain.entity.AppBusinessStrategy;
 import top.erzhiqian.weixin.security.domain.repository.BusinessStrategyRepository;
 import top.erzhiqian.weixin.security.infrastrure.convert.AppBusinessStrategyConvert;

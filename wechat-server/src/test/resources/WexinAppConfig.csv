@@ -1,0 +1,9 @@
+app,subscription,gh_67663cf2ed33,wx9a026bc04a865227,二之前士多测试账号,erzhiqianstore,uncertified,personal,normal,erzhiqianyi@gmail.com
+appsecret,e67afb896a61321ea6652f67ef0af46b
+devprofile,https://erzhiqian.top/weixin/app/weixin/,04MzOmzVA48Q0MLHGYsD3BdD6UBbGruZ,3i1xgm18FGQMPt0kbbnUAt0GGhv5eS4379kEaWAOZQU,ORIGINAL_ENCRYPT,JSON
+strategy,GetAccessToken,weixin
+strategy,GenerateQrCode,weixin
+strategy,CodeToSession,weixin
+strategy,UniformMessage,weixin
+strategy,SubscribeMessage,weixin
+

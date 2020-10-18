@@ -4,14 +4,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.platform.commons.util.StringUtils;
 import top.erzhiqian.weixin.lang.UrlLink;
-import top.erzhiqian.weixin.message.domain.valueobject.WeixinAppId;
+import top.erzhiqian.weixin.lang.WeixinAppId;
 import top.erzhiqian.weixin.security.client.cmd.BusinessStrategySetting;
 import top.erzhiqian.weixin.security.domain.valueobject.BusinessStrategy;
 import top.erzhiqian.weixin.security.domain.valueobject.BusinessStrategyEnum;
 import top.erzhiqian.weixin.security.domain.valueobject.BusinessType;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;

@@ -2,7 +2,7 @@ package top.erzhiqian.weixin.security.domain.entity;
 
 import org.springframework.util.StringUtils;
 import top.erzhiqian.weixin.lang.UrlLink;
-import top.erzhiqian.weixin.message.domain.valueobject.WeixinAppId;
+import top.erzhiqian.weixin.lang.WeixinAppId;
 import top.erzhiqian.weixin.security.client.cmd.BusinessStrategySetting;
 import top.erzhiqian.weixin.security.domain.valueobject.BusinessStrategy;
 import top.erzhiqian.weixin.security.domain.valueobject.BusinessStrategyEnum;

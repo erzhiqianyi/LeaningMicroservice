@@ -3,7 +3,7 @@ package top.erzhiqian.weixin.message.app;
 import org.springframework.stereotype.Component;
 import top.erzhiqian.weixin.message.client.cmd.OpenAppDevProfileCmd;
 import top.erzhiqian.weixin.message.domain.entity.AppDevProfile;
-import top.erzhiqian.weixin.message.domain.valueobject.WeixinAppId;
+import top.erzhiqian.weixin.lang.WeixinAppId;
 import top.erzhiqian.weixin.message.domain.repository.AppDevProfileRepository;
 
 @Component

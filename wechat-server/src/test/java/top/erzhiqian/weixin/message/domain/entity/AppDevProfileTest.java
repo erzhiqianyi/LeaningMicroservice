@@ -6,7 +6,7 @@ import top.erzhiqian.weixin.message.client.cmd.OpenAppDevProfileCmd;
 import top.erzhiqian.weixin.message.client.vo.AppDevProfileVO;
 import top.erzhiqian.weixin.message.domain.valueobject.MessageDataType;
 import top.erzhiqian.weixin.message.domain.valueobject.MessageEncodingKey;
-import top.erzhiqian.weixin.message.domain.valueobject.WeixinAppId;
+import top.erzhiqian.weixin.lang.WeixinAppId;
 
 import static org.junit.Assert.*;
 

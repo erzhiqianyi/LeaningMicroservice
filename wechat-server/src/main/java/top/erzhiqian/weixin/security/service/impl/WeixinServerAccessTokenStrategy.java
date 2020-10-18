@@ -1,7 +1,7 @@
 package top.erzhiqian.weixin.security.service.impl;
 
 import org.springframework.stereotype.Service;
-import top.erzhiqian.weixin.message.domain.valueobject.WeixinAppId;
+import top.erzhiqian.weixin.lang.WeixinAppId;
 import top.erzhiqian.weixin.security.IAccessToken;
 import top.erzhiqian.weixin.security.domain.entity.AccessToken;
 import top.erzhiqian.weixin.security.domain.entity.AppSecret;
@@ -41,6 +41,7 @@ public class WeixinServerAccessTokenStrategy implements IAccessToken {
         AccessToken accessToken = accessTokenRepository.findAccessToken(app);
 
         if (accessToken.expired()) {
+            //todo 发邮件处理，并重新获取access token
             throw new IllegalStateException(" token expired.");
         }
         return accessToken.getAccessToken();

@@ -2,7 +2,7 @@ package top.erzhiqian.weixin.security.domain.entity;
 
 import org.junit.Before;
 import org.junit.Test;
-import top.erzhiqian.weixin.message.domain.valueobject.WeixinAppId;
+import top.erzhiqian.weixin.lang.WeixinAppId;
 import top.erzhiqian.weixin.security.domain.valueobject.AccessTokenString;
 import top.erzhiqian.weixin.security.dto.AccessTokenDTO;
 

@@ -1,4 +1,4 @@
-package top.erzhiqian.weixin.message.domain.valueobject;
+package top.erzhiqian.weixin.lang;
 
 import lombok.ToString;
 import org.springframework.util.StringUtils;

@@ -7,23 +7,14 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import top.erzhiqian.weixin.message.domain.valueobject.WeixinAppId;
-import top.erzhiqian.weixin.security.domain.entity.AppBusinessStrategy;
-import top.erzhiqian.weixin.security.domain.entity.AppSecret;
-import top.erzhiqian.weixin.security.domain.repository.AppSecretRepository;
+import top.erzhiqian.weixin.lang.WeixinAppId;
 import top.erzhiqian.weixin.security.domain.valueobject.AccessTokenString;
 import top.erzhiqian.weixin.security.domain.valueobject.BusinessType;
 import top.erzhiqian.weixin.security.infrastrure.po.AppBusinessStrategyPO;
 import top.erzhiqian.weixin.security.infrastrure.repository.jdbc.AppBusinessStrategyJdbcRepository;
-import top.erzhiqian.weixin.security.infrastrure.repository.jdbc.AppSecretJdbcRepository;
 
-import javax.swing.plaf.synth.SynthTreeUI;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.toList;
 import static org.junit.Assert.*;
 
 

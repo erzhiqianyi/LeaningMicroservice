@@ -9,7 +9,7 @@ import top.erzhiqian.weixin.message.app.WeiXinMessageProcessApp;
 import top.erzhiqian.weixin.message.client.cmd.WeixinVerifyMessageCmd;
 import top.erzhiqian.weixin.message.client.weixin.WeixinMessageCmd;
 import top.erzhiqian.weixin.message.client.weixin.WeixinMessageResponse;
-import top.erzhiqian.weixin.message.domain.valueobject.WeixinAppId;
+import top.erzhiqian.weixin.lang.WeixinAppId;
 
 import java.io.IOException;
 

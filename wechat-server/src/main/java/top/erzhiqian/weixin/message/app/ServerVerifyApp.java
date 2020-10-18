@@ -2,7 +2,7 @@ package top.erzhiqian.weixin.message.app;
 
 import org.springframework.stereotype.Component;
 import top.erzhiqian.weixin.message.client.cmd.WeixinVerifyMessageCmd;
-import top.erzhiqian.weixin.message.domain.valueobject.WeixinAppId;
+import top.erzhiqian.weixin.lang.WeixinAppId;
 import top.erzhiqian.weixin.message.domain.repository.WeixinServerTokenRepository;
 import top.erzhiqian.weixin.message.domain.valueobject.IWeixinServerToken;
 

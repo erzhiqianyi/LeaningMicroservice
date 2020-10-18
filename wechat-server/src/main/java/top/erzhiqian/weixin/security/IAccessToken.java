@@ -1,6 +1,6 @@
 package top.erzhiqian.weixin.security;
 
-import top.erzhiqian.weixin.message.domain.valueobject.WeixinAppId;
+import top.erzhiqian.weixin.lang.WeixinAppId;
 import top.erzhiqian.weixin.security.domain.valueobject.AccessTokenString;
 import top.erzhiqian.weixin.security.domain.valueobject.BusinessType;
 import top.erzhiqian.weixin.spring.ApplicationContextHolder;

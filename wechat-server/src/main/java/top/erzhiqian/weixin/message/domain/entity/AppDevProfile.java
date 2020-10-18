@@ -2,6 +2,7 @@ package top.erzhiqian.weixin.message.domain.entity;
 
 import top.erzhiqian.weixin.core.domain.entity.AutoIncrementEntity;
 import top.erzhiqian.weixin.lang.UrlLink;
+import top.erzhiqian.weixin.lang.WeixinAppId;
 import top.erzhiqian.weixin.message.client.cmd.OpenAppDevProfileCmd;
 import top.erzhiqian.weixin.message.domain.valueobject.*;
 

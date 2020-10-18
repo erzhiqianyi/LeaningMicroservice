@@ -1,0 +1,53 @@
+### 修改AppSecret
+POST http://localhost:40001/weixin/appsecret/change/wx9a026bc04a865227
+Content-Type:  application/json
+
+{
+  "appSecret": "e67afb896a61321ea6652f67ef0af46b"
+}
+
+### 修改开发配置
+POST http://localhost:40001/weixin/devprofile/open/wx4ff4f9c7af819999
+Content-Type:  application/json
+
+{
+  "serverUrl": "https://erzhiqian.top/weixin/app/weixin/wx4ff4f9c7af819999",
+  "serverToken": "04MzOmzVA48Q0MLHGYsD3BdD6UBbGruZ",
+  "aesKey": "3i1xgm18FGQMPt0kbbnUAt0GGhv5eS4379kEaWAOZQU",
+  "encryptionMethod": "ORIGINAL_ENCRYPT",
+  "dataType": "JSON"
+}
+
+### 设置业务策略
+POST http://localhost:40001/weixin/business/strategy/setting/wx9a026bc04a865227
+Content-Type:  application/json
+
+{
+  "strategies": [
+    {
+      "businessType": "GetAccessToken",
+      "strategy": "weixin"
+    },
+    {
+      "businessType": "GenerateQrCode",
+      "strategy": "weixin"
+    },
+   {
+      "businessType": "GenerateQrCode",
+      "strategy": "weixin"
+    },
+    {
+      "businessType": "CodeToSession",
+      "strategy": "weixin"
+    },
+    {
+      "businessType": "UniformMessage",
+      "strategy": "weixin"
+    },
+    {
+      "businessType": "SubscribeMessage",
+      "strategy": "weixin"
+    }
+  ]
+}
+

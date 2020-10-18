@@ -3,7 +3,7 @@ package top.erzhiqian.weixin.security;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
-import top.erzhiqian.weixin.message.domain.valueobject.WeixinAppId;
+import top.erzhiqian.weixin.lang.WeixinAppId;
 import top.erzhiqian.weixin.security.app.BusinessStrategyApp;
 import top.erzhiqian.weixin.security.client.cmd.ChangeBusinessStrategyCmd;
 import top.erzhiqian.weixin.security.client.vo.BusinessStrategyVO;

@@ -7,7 +7,7 @@ import top.erzhiqian.weixin.message.app.DevProfileApp;
 import top.erzhiqian.weixin.message.client.cmd.OpenAppDevProfileCmd;
 import top.erzhiqian.weixin.message.client.vo.AppDevProfileVO;
 import top.erzhiqian.weixin.message.domain.entity.AppDevProfile;
-import top.erzhiqian.weixin.message.domain.valueobject.WeixinAppId;
+import top.erzhiqian.weixin.lang.WeixinAppId;
 
 @RestController
 @Log4j2

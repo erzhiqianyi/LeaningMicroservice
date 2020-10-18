@@ -2,7 +2,6 @@ package top.erzhiqian.weixin.message.client.weixin;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import lombok.Data;
-import top.erzhiqian.weixin.message.domain.valueobject.WeixinAppId;
 
 @Data
 public class WeixinMessageCmd {

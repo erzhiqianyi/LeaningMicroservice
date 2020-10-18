@@ -3,7 +3,7 @@ package top.erzhiqian.weixin.message.domain.entity;
 import org.junit.Before;
 import org.junit.Test;
 import top.erzhiqian.weixin.message.client.weixin.WeixinMessageCmd;
-import top.erzhiqian.weixin.message.domain.valueobject.WeixinAppId;
+import top.erzhiqian.weixin.lang.WeixinAppId;
 import top.erzhiqian.weixin.message.domain.valueobject.message.*;
 
 import static org.junit.Assert.assertEquals;
