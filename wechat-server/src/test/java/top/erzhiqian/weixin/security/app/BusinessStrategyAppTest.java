@@ -39,7 +39,7 @@ public class BusinessStrategyAppTest {
 
     @Test
     public void getBusinessStrategy() {
-        List<BusinessStrategyVO> strategy = app.getBusinessStrategy(weixinAppId);
+        List<BusinessStrategyVO> strategy = app.listBusinessStrategy(weixinAppId);
         assertNotNull(strategy);
         strategy.forEach(item -> log.info(item));
     }
@@ -50,7 +50,7 @@ public class BusinessStrategyAppTest {
         List<BusinessStrategySetting> settings = new ArrayList<>();
 
         BusinessStrategySetting refreshToken = new BusinessStrategySetting();
-        refreshToken.setBusinessType(BusinessType.REFRESH_ACCESS_TOKEN.getCode());
+        refreshToken.setBusinessType(BusinessType.GET_ACCESS_TOKEN.getCode());
         refreshToken.setStrategy(BusinessStrategyEnum.WEIXIN_SERVER.getCode());
 
         BusinessStrategySetting generateCode = new BusinessStrategySetting();
@@ -61,7 +61,7 @@ public class BusinessStrategyAppTest {
         settings.add(generateCode);
 
         app.setBusinessStrategy(weixinAppId, settings);
-        List<BusinessStrategyVO> strategy = app.getBusinessStrategy(weixinAppId);
+        List<BusinessStrategyVO> strategy = app.listBusinessStrategy(weixinAppId);
         assertNotNull(strategy);
         Map<String, BusinessStrategyVO> map = strategy
                 .stream()

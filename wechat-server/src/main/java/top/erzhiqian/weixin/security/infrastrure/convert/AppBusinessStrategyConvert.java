@@ -7,7 +7,6 @@ import top.erzhiqian.weixin.security.domain.entity.AppBusinessStrategy;
 import top.erzhiqian.weixin.security.domain.valueobject.BusinessStrategy;
 import top.erzhiqian.weixin.security.infrastrure.po.AppBusinessStrategyPO;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +31,7 @@ public class AppBusinessStrategyConvert {
                     setting.setCallBackUrl(item.getCallBackUrl());
                     return setting;
                 }).collect(toList());
-        strategy.setStrategy(settings);
+        strategy.registerStrategy(settings);
         return strategy;
     }
 

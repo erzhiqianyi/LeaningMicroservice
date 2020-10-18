@@ -5,7 +5,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
 import top.erzhiqian.weixin.message.domain.valueobject.WeixinAppId;
 import top.erzhiqian.weixin.security.app.BusinessStrategyApp;
-import top.erzhiqian.weixin.security.client.cmd.ChangeAppSecretCmd;
 import top.erzhiqian.weixin.security.client.cmd.ChangeBusinessStrategyCmd;
 import top.erzhiqian.weixin.security.client.vo.BusinessStrategyVO;
 
@@ -25,7 +24,7 @@ public class BusinessStrategyController {
 
     @GetMapping("/business/strategies/{appId}")
     public List<BusinessStrategyVO> listBusinessStrategy(@PathVariable("appId") String appId) {
-        List<BusinessStrategyVO> businessStrategies = app.getBusinessStrategy(WeixinAppId.app(appId));
+        List<BusinessStrategyVO> businessStrategies = app.listBusinessStrategy(WeixinAppId.app(appId));
         return businessStrategies;
     }
 
@@ -33,6 +32,6 @@ public class BusinessStrategyController {
     public List<BusinessStrategyVO> setBusinessStrategy(@PathVariable("appId") String appId,
                                                         @Valid @RequestBody ChangeBusinessStrategyCmd cmd) {
         app.setBusinessStrategy(WeixinAppId.app(appId), cmd.getStrategies());
-        return app.getBusinessStrategy(WeixinAppId.app(appId));
+        return app.listBusinessStrategy(WeixinAppId.app(appId));
     }
 }

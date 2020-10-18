@@ -2,16 +2,15 @@ package top.erzhiqian.weixin.security.service.impl;
 
 import org.springframework.stereotype.Service;
 import top.erzhiqian.weixin.message.domain.valueobject.WeixinAppId;
-import top.erzhiqian.weixin.security.domain.repository.IAccessTokenStrategy;
-import top.erzhiqian.weixin.security.dto.AccessTokenDTO;
+import top.erzhiqian.weixin.security.IAccessToken;
+import top.erzhiqian.weixin.security.domain.valueobject.AccessTokenString;
 
-import java.util.Optional;
+@Service("thirdGetAccessToken")
+public class ThirdServerAccessTokenStrategy implements IAccessToken {
 
-@Service("thirdRefreshAccessToken")
-public class ThirdServerAccessTokenStrategy implements IAccessTokenStrategy {
 
     @Override
-    public Optional<AccessTokenDTO> getAccessToken(WeixinAppId app) {
-        return Optional.empty();
+    public AccessTokenString loadAccessToken(WeixinAppId app) {
+        throw new IllegalStateException(" service not  implement.");
     }
 }

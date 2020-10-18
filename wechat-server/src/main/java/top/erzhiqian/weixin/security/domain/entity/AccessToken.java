@@ -1,18 +1,15 @@
 package top.erzhiqian.weixin.security.domain.entity;
 
+import lombok.Getter;
 import lombok.ToString;
-import top.erzhiqian.weixin.core.domain.entity.AutoIncrementEntity;
 import top.erzhiqian.weixin.message.domain.valueobject.WeixinAppId;
-import top.erzhiqian.weixin.security.domain.repository.IAccessTokenStrategy;
 import top.erzhiqian.weixin.security.domain.valueobject.AccessTokenString;
 import top.erzhiqian.weixin.security.domain.valueobject.ExpiredTime;
 import top.erzhiqian.weixin.security.dto.AccessTokenDTO;
 
-import java.time.Instant;
-import java.util.Optional;
-
 @ToString
-public class AccessToken extends AutoIncrementEntity {
+@Getter
+public class AccessToken {
 
     private final WeixinAppId app;
 
@@ -20,35 +17,25 @@ public class AccessToken extends AutoIncrementEntity {
 
     private ExpiredTime expiredTime;
 
-    public static AccessToken restoreAccessToken(WeixinAppId app, AccessTokenDTO dto) {
-        AccessToken accessToken = new AccessToken(app);
-        if (null != dto){
-            accessToken.refreshToken(dto);
-        }
-        return accessToken;
+    public static AccessToken appAccessToken(WeixinAppId app) {
+        return new AccessToken(app);
     }
+
 
     private AccessToken(WeixinAppId app) {
         if (null == app) {
-            throw new IllegalArgumentException("illegal app.");
+            throw new IllegalArgumentException(" illegal app.");
         }
         this.app = app;
     }
 
-    public void refreshAccessToken(IAccessTokenStrategy strategy) {
-        if (null == strategy) {
-            throw new IllegalArgumentException("illegal business .");
+    public void setToken(AccessTokenDTO accessToken) {
+        if (null == accessToken) {
+            throw new IllegalArgumentException("illegal access token.");
         }
-        Optional<AccessTokenDTO> optional = strategy.getAccessToken(app);
-        optional.orElseThrow(() -> new IllegalStateException(" refresh access token failed."));
-        refreshToken(optional.get());
+        setAccessToken(new AccessTokenString(accessToken.getAccessToken()));
+        setExpiredTime(new ExpiredTime(System.currentTimeMillis(), accessToken.getExpiresIn()));
     }
-
-    private void refreshToken(AccessTokenDTO accessTokenDTO) {
-        setAccessToken(new AccessTokenString(accessTokenDTO.getAccessToken()));
-        setExpiredTime(new ExpiredTime(Instant.now(), accessTokenDTO.getTimeToLive()));
-    }
-
 
     private void setAccessToken(AccessTokenString accessToken) {
         this.accessToken = accessToken;
@@ -61,4 +48,13 @@ public class AccessToken extends AutoIncrementEntity {
     public boolean expired() {
         return null == expiredTime || expiredTime.expired();
     }
+
+
+    public void restoreToken(String accessToken, Long createAt, Integer timeToLive) {
+        setAccessToken(new AccessTokenString(accessToken));
+        setExpiredTime(new ExpiredTime(createAt, timeToLive));
+    }
+
+
+
 }

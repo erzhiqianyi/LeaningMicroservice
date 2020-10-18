@@ -9,7 +9,7 @@ public class WeixinAppId {
 
     private final String appId;
 
-    public WeixinAppId(String appId) {
+    private WeixinAppId(String appId) {
         if (StringUtils.isEmpty(appId)) {
             throw new IllegalArgumentException("illegal appId");
         }

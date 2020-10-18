@@ -9,9 +9,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import top.erzhiqian.weixin.message.domain.valueobject.WeixinAppId;
 import top.erzhiqian.weixin.security.IAccessToken;
-import top.erzhiqian.weixin.security.domain.entity.AppSecret;
-import top.erzhiqian.weixin.security.domain.repository.AppSecretRepository;
 import top.erzhiqian.weixin.security.domain.valueobject.AccessTokenString;
+import top.erzhiqian.weixin.security.domain.valueobject.BusinessStrategyEnum;
+import top.erzhiqian.weixin.security.domain.valueobject.BusinessType;
+import top.erzhiqian.weixin.security.infrastrure.po.AppBusinessStrategyPO;
+import top.erzhiqian.weixin.security.infrastrure.repository.jdbc.AppBusinessStrategyJdbcRepository;
+
+import java.util.Optional;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -24,25 +28,32 @@ public class AccessTokenAppTest {
     @Autowired
     private AccessTokenApp accessTokenApp;
 
+    private WeixinAppId app;
+
 
     @Autowired
-    private AppSecretRepository repository;
-
-    private AppSecret appSecret;
-
-    @Autowired
-    private IAccessToken accessToken;
+    private AppBusinessStrategyJdbcRepository repository;
 
     @Before
     public void init() {
-        String appId = "wx7886d971aa7bcde7";
-        appSecret = repository.findAppSecret(WeixinAppId.app(appId));
+        Optional<AppBusinessStrategyPO> optional = repository.findByBusinessType(BusinessType.GET_ACCESS_TOKEN.getCode())
+                .stream().filter(item -> BusinessStrategyEnum.isWeixinStrategy(
+                        BusinessStrategyEnum.getStrategy(item.getStrategy())))
+                .findAny();
+        if (optional.isPresent()){
+            app = WeixinAppId.app(optional.get().getAppId());
+        }
     }
 
     @Test
     public void refreshAccessToken() {
-        accessTokenApp.refreshAccessToken(appSecret);
-        AccessTokenString accessTokenString = accessToken.loadAccessToken(appSecret.getApp());
-        assertNotNull(accessTokenString);
+        if (null == app){
+            log.error("app 不用刷新access token.");
+            return;
+        }
+        accessTokenApp.refreshAccessToken(app);
+        AccessTokenString accessToken = IAccessToken.accessToken(app);
+        assertNotNull(accessToken);
+        log.info(accessToken);
     }
 }

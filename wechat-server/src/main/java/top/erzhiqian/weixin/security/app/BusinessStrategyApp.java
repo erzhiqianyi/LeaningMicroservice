@@ -1,12 +1,12 @@
 package top.erzhiqian.weixin.security.app;
 
-import jdk.nashorn.internal.ir.LiteralNode;
 import org.springframework.stereotype.Component;
 import top.erzhiqian.weixin.message.domain.valueobject.WeixinAppId;
 import top.erzhiqian.weixin.security.client.cmd.BusinessStrategySetting;
 import top.erzhiqian.weixin.security.client.vo.BusinessStrategyVO;
 import top.erzhiqian.weixin.security.domain.entity.AppBusinessStrategy;
 import top.erzhiqian.weixin.security.domain.repository.BusinessStrategyRepository;
+import top.erzhiqian.weixin.security.domain.valueobject.BusinessStrategy;
 import top.erzhiqian.weixin.security.domain.valueobject.BusinessType;
 
 import java.util.Collections;
@@ -24,7 +24,7 @@ public class BusinessStrategyApp {
         this.repository = repository;
     }
 
-    public List<BusinessStrategyVO> getBusinessStrategy(WeixinAppId app) {
+    public List<BusinessStrategyVO> listBusinessStrategy(WeixinAppId app) {
         if (null == app) {
             return Collections.emptyList();
         }
@@ -37,11 +37,23 @@ public class BusinessStrategyApp {
     }
 
     public void setBusinessStrategy(WeixinAppId app, List<BusinessStrategySetting> settings) {
-        if (null == app){
+        if (null == app) {
             throw new IllegalArgumentException("illegal app.");
         }
         AppBusinessStrategy strategy = repository.findBusinessStrategy(app);
-        strategy.setStrategy(settings);
+        strategy.registerStrategy(settings);
         repository.save(strategy);
+    }
+
+    public BusinessStrategy getBusinessStrategy(WeixinAppId app, BusinessType business) {
+        if (null == business) {
+            throw new IllegalArgumentException("illegal business.");
+        }
+        AppBusinessStrategy appBusinessStrategy = repository.findBusinessStrategy(app);
+        if (null == appBusinessStrategy) {
+            throw new IllegalArgumentException("illegal app.");
+        }
+        BusinessStrategy businessStrategy = appBusinessStrategy.getStrategy(business);
+        return businessStrategy;
     }
 }

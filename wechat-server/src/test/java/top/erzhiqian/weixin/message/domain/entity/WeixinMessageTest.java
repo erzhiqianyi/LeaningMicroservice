@@ -19,7 +19,7 @@ public class WeixinMessageTest {
 
     @Before
     public void init() {
-        processApp = new WeixinAppId("2345");
+        processApp = WeixinAppId.app("2345");
         cmd = new WeixinMessageCmd();
         cmd.setMsgId(System.currentTimeMillis());
         cmd.setToUserName("3423432");

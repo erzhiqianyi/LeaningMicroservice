@@ -55,7 +55,7 @@ public class BusinessStrategyControllerTest {
         String url = "/business/strategy/setting/" + appId;
         ChangeBusinessStrategyCmd cmd = new ChangeBusinessStrategyCmd();
         BusinessStrategySetting refreshToken = new BusinessStrategySetting();
-        refreshToken.setBusinessType(BusinessType.REFRESH_ACCESS_TOKEN.getCode());
+        refreshToken.setBusinessType(BusinessType.GET_ACCESS_TOKEN.getCode());
         refreshToken.setStrategy(BusinessStrategyEnum.WEIXIN_SERVER.getCode());
         cmd.setStrategies(Arrays.asList(refreshToken));
         mockMvc.perform(MockMvcRequestBuilders.post(url)
@@ -85,7 +85,7 @@ public class BusinessStrategyControllerTest {
         String url = "/business/strategy/setting/" + appId;
         ChangeBusinessStrategyCmd cmd = new ChangeBusinessStrategyCmd();
         BusinessStrategySetting refreshToken = new BusinessStrategySetting();
-        refreshToken.setBusinessType(BusinessType.REFRESH_ACCESS_TOKEN.getCode());
+        refreshToken.setBusinessType(BusinessType.GET_ACCESS_TOKEN.getCode());
         cmd.setStrategies(Arrays.asList(refreshToken));
         mockMvc.perform(MockMvcRequestBuilders.post(url)
                 .contentType(MediaType.APPLICATION_JSON)

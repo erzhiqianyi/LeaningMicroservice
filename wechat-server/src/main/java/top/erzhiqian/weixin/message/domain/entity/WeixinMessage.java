@@ -32,7 +32,7 @@ public class WeixinMessage extends AutoIncrementEntity {
         if (null == app || null == msgType) {
             throw new IllegalArgumentException("illegal message.");
         }
-        this.appId = new WeixinAppId(app.appId());
+        this.appId =WeixinAppId.app(app.appId());
         this.msgType = msgType;
         this.msgId = new WeixinMsgId(msgId.id());
 
@@ -84,7 +84,7 @@ public class WeixinMessage extends AutoIncrementEntity {
     }
 
     private void setToUserName(String toUserName) {
-        this.toUserName = new WeixinAppId(toUserName);
+        this.toUserName =WeixinAppId.app(toUserName);
     }
 
     private void setFromUserName(String fromUserName) {

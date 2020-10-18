@@ -1,17 +1,20 @@
 package top.erzhiqian.weixin.security.domain.valueobject;
 
+import lombok.Getter;
+
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 
+@Getter
 public class ExpiredTime {
-    private final Instant createAt;
-    private final Long timeToLive;
-    private final TemporalUnit timeUnit;
 
-    public ExpiredTime(Instant createAt, Long timeToLive) {
+    private final Long createAt;
+
+    private final Integer timeToLive;
+
+    public ExpiredTime(Long createAt, Integer timeToLive) {
+        Instant.now().toEpochMilli();
         if (null == createAt) {
-            this.createAt = Instant.now();
+            this.createAt = System.currentTimeMillis();
         } else {
             this.createAt = createAt;
         }
@@ -19,10 +22,10 @@ public class ExpiredTime {
             throw new IllegalArgumentException(" time to live can't be null.");
         }
         this.timeToLive = timeToLive;
-        this.timeUnit = ChronoUnit.SECONDS;
     }
 
     public boolean expired() {
-        return Instant.now().isAfter(createAt.plus(timeToLive,timeUnit));
+        long now = System.currentTimeMillis();
+        return now > createAt + timeToLive * 1000;
     }
 }

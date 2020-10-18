@@ -1,7 +1,7 @@
 package top.erzhiqian.weixin.security.domain.valueobject;
 
 import org.springframework.util.StringUtils;
-import top.erzhiqian.weixin.security.domain.repository.IAccessTokenStrategy;
+import top.erzhiqian.weixin.security.IAccessToken;
 
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -15,24 +15,14 @@ import java.util.stream.Stream;
 public enum BusinessType {
 
 
-    REFRESH_ACCESS_TOKEN("RefreshAccessToken", "获取ACCESS_TOKEN") {
+    GET_ACCESS_TOKEN("GetAccessToken", "获取ACCESS_TOKEN") {
         @Override
         public Class strategy() {
-            return IAccessTokenStrategy.class;
+            return IAccessToken.class;
         }
     },
 
     GENERATE_QR_CODE("GenerateQrCode", "生成二维码") {
-        @Override
-        public Class strategy() {
-            return null;
-        }
-    },
-
-    /**
-     * 不推荐单独获取应用密钥，获取密钥后，就可以用密钥进行所有操作，要么把密钥给我们托管，或者全部自己实现业务。
-     */
-    APP_SECRET("GetAppSecret", "获取应用密钥") {
         @Override
         public Class strategy() {
             return null;

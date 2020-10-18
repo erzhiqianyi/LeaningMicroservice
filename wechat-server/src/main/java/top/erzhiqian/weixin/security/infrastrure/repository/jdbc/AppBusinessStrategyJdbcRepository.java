@@ -10,4 +10,5 @@ import java.util.List;
 public interface AppBusinessStrategyJdbcRepository
         extends CrudRepository<AppBusinessStrategyPO, Long> {
     List<AppBusinessStrategyPO> findByAppId(String appId);
+    List<AppBusinessStrategyPO> findByBusinessType(String businessType);
 }

@@ -26,7 +26,7 @@ public class WeiXinMessageProcessAppTest {
 
     @Before
     public void init() {
-        weixinApp = new WeixinAppId("2345");
+        weixinApp = WeixinAppId.app("2345");
         cmd = new WeixinMessageCmd();
         cmd.setMsgId(System.currentTimeMillis());
         cmd.setToUserName("3423432");

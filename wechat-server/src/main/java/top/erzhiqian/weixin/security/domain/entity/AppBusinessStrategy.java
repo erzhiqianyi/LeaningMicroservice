@@ -28,14 +28,6 @@ public class AppBusinessStrategy {
     }
 
 
-    public String strategyName(BusinessType business) {
-        BusinessStrategy businessStrategy = getStrategy(business);
-        if (null == businessStrategy) {
-            throw new IllegalArgumentException("illegal business strategy.");
-        }
-        return businessStrategy.getStrategy().getCode() + business.getCode();
-    }
-
     public BusinessStrategy getStrategy(BusinessType business) {
         if (null == business) {
             throw new IllegalArgumentException("illegal business");
@@ -52,22 +44,22 @@ public class AppBusinessStrategy {
         strategies.put(businessType, businessStrategy);
     }
 
-    public void setStrategy(List<BusinessStrategySetting> settings) {
+    public void registerStrategy(List<BusinessStrategySetting> settings) {
         if (null == settings || settings.isEmpty()) {
             return;
         }
         settings.forEach(setting -> {
-            setStrategy(setting);
+            registerStrategy(setting);
         });
     }
 
-    private void setStrategy(BusinessStrategySetting setting) {
+    private void registerStrategy(BusinessStrategySetting setting) {
         if (null == setting) {
             return;
         }
         BusinessType businessType = BusinessType.getBusinessType(setting.getBusinessType());
         if (null == businessType) {
-            throw new IllegalArgumentException(" illegal business .");
+            return;
         }
         BusinessStrategyEnum strategy = BusinessStrategyEnum.getStrategy(setting.getStrategy());
         if (null == strategy) {

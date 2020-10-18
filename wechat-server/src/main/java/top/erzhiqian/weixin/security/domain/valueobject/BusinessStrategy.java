@@ -34,6 +34,14 @@ public class BusinessStrategy {
 
 
     public String callBackUrl() {
-       return null == callback ? null : callback.url();
+        return null == callback ? null : callback.url();
+    }
+
+    public String strategyName() {
+        return strategy.getCode() + businessType.getCode();
+    }
+
+    public boolean isWeixinBusiness() {
+        return BusinessStrategyEnum.isWeixinStrategy(strategy);
     }
 }
