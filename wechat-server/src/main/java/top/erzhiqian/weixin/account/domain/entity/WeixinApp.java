@@ -1,45 +1,25 @@
 package top.erzhiqian.weixin.account.domain.entity;
 
-import top.erzhiqian.weixin.account.client.cmd.WeixinAppRegisterCmd;
-import top.erzhiqian.weixin.account.domain.valueobject.HostAccountId;
-import top.erzhiqian.weixin.account.domain.valueobject.WeixinAppRemark;
-import top.erzhiqian.weixin.account.domain.valueobject.WeixinAppStatus;
-import top.erzhiqian.weixin.account.domain.valueobject.WeixinAppType;
-import top.erzhiqian.weixin.core.domain.entity.AutoIncrementEntity;
-import top.erzhiqian.weixin.lang.WeixinAppId;
+import lombok.Getter;
+import top.erzhiqian.weixin.account.domain.valueobject.WeixinAppAccount;
 
-public class WeixinApp extends AutoIncrementEntity {
+@Getter
+public class WeixinApp {
 
-    private WeixinAppId appId;
+    private final WeixinAppAccount weixinAccount;
 
-    private WeixinAppId originalId;
+    private final WeixinAppContext context;
 
-    private WeixinAppType type;
-
-    private WeixinAppStatus status;
-
-    private WeixinAppRemark remark;
-
-    private final HostAccountId hostAccount;
-
-
-    public WeixinApp(HostAccountId hostAccount) {
-        if (null == hostAccount){
-            throw new IllegalArgumentException(" app host not exists.");
+    public WeixinApp(WeixinAppAccount weixinAccount) {
+        if ( null == weixinAccount) {
+            throw new IllegalArgumentException("illegal app.");
         }
-        this.hostAccount = hostAccount;
-    }
-
-    public static WeixinApp app(HostAccountId hostAccount) {
-        WeixinApp app = new WeixinApp(hostAccount);
-        return app;
+        this.weixinAccount = weixinAccount;
+        this.context =  new WeixinAppContext(weixinAccount);
     }
 
 
-    public void register(WeixinAppRegisterCmd cmd){
 
-
-    }
 
 
 }

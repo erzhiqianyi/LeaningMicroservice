@@ -1,5 +1,8 @@
 package top.erzhiqian.weixin.account.client.cmd;
 
+import lombok.Data;
+
+@Data
 public class WeixinAppRegisterCmd {
 
     private String appId;
@@ -14,6 +17,7 @@ public class WeixinAppRegisterCmd {
 
     private String certifiedStatus ;
 
+    private String hostType;
 
 
 }
