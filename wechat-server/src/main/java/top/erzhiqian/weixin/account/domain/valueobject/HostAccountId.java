@@ -5,7 +5,7 @@ import org.springframework.util.StringUtils;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-public class RegisterId {
+public class HostAccountId {
     private static final String SPLIT = "_";
     private static final Integer LENGTH = 2;
 
@@ -13,7 +13,7 @@ public class RegisterId {
 
     private final RegisterType type;
 
-    public RegisterId(String id) {
+    public HostAccountId(String id) {
         if (null == id) {
             throw new IllegalArgumentException("illegal id.");
         }
