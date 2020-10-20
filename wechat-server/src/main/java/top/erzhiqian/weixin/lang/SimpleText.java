@@ -11,4 +11,8 @@ public class SimpleText {
         }
         this.text = text;
     }
+
+    public String value(){
+        return text;
+    }
 }

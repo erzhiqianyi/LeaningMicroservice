@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface WeixinAppHostRepository {
     Optional<WeixinAppHost> findWeixinAppHost(WeixinAppId appId);
+
+    void save(WeixinAppHost appHost);
 }

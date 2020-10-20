@@ -1,12 +1,23 @@
 package top.erzhiqian.weixin.account.domain.entity;
 
+import lombok.extern.log4j.Log4j2;
+import org.apache.commons.collections.CollectionUtils;
 import org.junit.Before;
 import org.junit.Test;
 import top.erzhiqian.weixin.account.client.cmd.WeixinAppRegisterCmd;
 import top.erzhiqian.weixin.account.domain.valueobject.*;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toSet;
 import static org.junit.Assert.*;
 
+@Log4j2
 public class WeixinAppContextTest {
 
     private WeixinAppRegisterCmd registerCmd;
@@ -43,9 +54,9 @@ public class WeixinAppContextTest {
     public void personalSubscribe() {
         registerCmd.setAppType(WeixinAppType.SUBSCRIBE.getCode());
         setBuilder();
-        WeixinApp app = new WeixinApp( builder.build());
+        WeixinApp app = new WeixinApp(builder.build());
         assertNotNull(app);
-        boolean certified = app.getContext().certified();
+        boolean certified = app.certified();
         assertFalse(certified);
     }
 
@@ -54,9 +65,9 @@ public class WeixinAppContextTest {
     public void personalMiniProgram() {
         registerCmd.setAppType(WeixinAppType.MINI_PROGRAM.getCode());
         setBuilder();
-        WeixinApp app = new WeixinApp( builder.build());
+        WeixinApp app = new WeixinApp(builder.build());
         assertNotNull(app);
-        boolean certified = app.getContext().certified();
+        boolean certified = app.certified();
         assertFalse(certified);
 
     }
@@ -67,9 +78,9 @@ public class WeixinAppContextTest {
         registerCmd.setHostType(WeixinAccountHostType.COMPANY.getCode());
         registerCmd.setCertifiedStatus(WeixinCertifiedState.CERTIFIED.getCode());
         setBuilder();
-        WeixinApp app = new WeixinApp( builder.build());
+        WeixinApp app = new WeixinApp(builder.build());
         assertNotNull(app);
-        boolean certified = app.getContext().certified();
+        boolean certified = app.certified();
         assertTrue(certified);
 
     }
@@ -80,9 +91,9 @@ public class WeixinAppContextTest {
         registerCmd.setHostType(WeixinAccountHostType.COMPANY.getCode());
         registerCmd.setCertifiedStatus(WeixinCertifiedState.UN_CERTIFIED.getCode());
         setBuilder();
-        WeixinApp app = new WeixinApp( builder.build());
+        WeixinApp app = new WeixinApp(builder.build());
         assertNotNull(app);
-        boolean certified = app.getContext().certified();
+        boolean certified = app.certified();
         assertFalse(certified);
 
 
@@ -95,9 +106,9 @@ public class WeixinAppContextTest {
         registerCmd.setHostType(WeixinAccountHostType.COMPANY.getCode());
         registerCmd.setCertifiedStatus(WeixinCertifiedState.CERTIFIED.getCode());
         setBuilder();
-        WeixinApp app = new WeixinApp( builder.build());
+        WeixinApp app = new WeixinApp(builder.build());
         assertNotNull(app);
-        boolean certified = app.getContext().certified();
+        boolean certified = app.certified();
         assertTrue(certified);
 
     }
@@ -108,9 +119,9 @@ public class WeixinAppContextTest {
         registerCmd.setHostType(WeixinAccountHostType.COMPANY.getCode());
         registerCmd.setCertifiedStatus(WeixinCertifiedState.UN_CERTIFIED.getCode());
         setBuilder();
-        WeixinApp app = new WeixinApp( builder.build());
+        WeixinApp app = new WeixinApp(builder.build());
         assertNotNull(app);
-        boolean certified = app.getContext().certified();
+        boolean certified = app.certified();
         assertFalse(certified);
 
 
@@ -122,9 +133,9 @@ public class WeixinAppContextTest {
         registerCmd.setHostType(WeixinAccountHostType.COMPANY.getCode());
         registerCmd.setCertifiedStatus(WeixinCertifiedState.CERTIFIED.getCode());
         setBuilder();
-        WeixinApp app = new WeixinApp( builder.build());
+        WeixinApp app = new WeixinApp(builder.build());
         assertNotNull(app);
-        boolean certified = app.getContext().certified();
+        boolean certified = app.certified();
         assertTrue(certified);
 
     }
@@ -135,14 +146,13 @@ public class WeixinAppContextTest {
         registerCmd.setHostType(WeixinAccountHostType.COMPANY.getCode());
         registerCmd.setCertifiedStatus(WeixinCertifiedState.UN_CERTIFIED.getCode());
         setBuilder();
-        WeixinApp app = new WeixinApp( builder.build());
+        WeixinApp app = new WeixinApp(builder.build());
         assertNotNull(app);
-        boolean certified = app.getContext().certified();
+        boolean certified = app.certified();
         assertFalse(certified);
 
 
     }
-
 
 
     private void setBuilder() {
@@ -155,6 +165,7 @@ public class WeixinAppContextTest {
 
 
     }
+
 
 
 }

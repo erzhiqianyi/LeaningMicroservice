@@ -9,7 +9,7 @@ public class HostAccountId {
     private static final String SPLIT = "_";
     private static final Integer LENGTH = 2;
 
-    private final Long id;
+    private final String id;
 
     private final RegisterType type;
 
@@ -22,7 +22,11 @@ public class HostAccountId {
             throw new IllegalArgumentException();
         }
         this.type = RegisterType.getRegisterType(array[0]);
-        this.id = Long.valueOf(array[1]);
+        this.id = id;
+    }
+
+    public String id() {
+        return id;
     }
 
     public enum RegisterType {

@@ -1,9 +1,11 @@
 package top.erzhiqian.weixin.account.domain.entity;
 
+import lombok.Getter;
 import top.erzhiqian.weixin.account.domain.valueobject.HostAccountId;
 import top.erzhiqian.weixin.account.domain.valueobject.WeixinAppAccount;
 import top.erzhiqian.weixin.core.domain.entity.AutoIncrementEntity;
 
+@Getter
 public class WeixinAppHost extends AutoIncrementEntity {
 
     private final HostAccountId host;
@@ -28,8 +30,6 @@ public class WeixinAppHost extends AutoIncrementEntity {
     public static WeixinAppHost restoreApp(HostAccountId host, WeixinAppAccount weixinAccount, Long id) {
         return new WeixinAppHost(host, weixinAccount, id);
     }
-
-
 
 
 }
