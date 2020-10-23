@@ -1,8 +1,9 @@
 package top.erzhiqian.weixin.account.domain.entity;
 
 import top.erzhiqian.weixin.account.domain.valueobject.WeixinAppAccount;
+import top.erzhiqian.weixin.core.domain.entity.AutoIncrementEntity;
 
-public class WeixinApp {
+public class WeixinApp extends AutoIncrementEntity {
 
     private final WeixinAppAccount weixinAccount;
 

@@ -1,8 +1,7 @@
 package top.erzhiqian.weixin.account.infrastructure.adapt;
 
 import org.springframework.stereotype.Service;
-import top.erzhiqian.weixin.account.domain.entity.WeixinApp;
-import top.erzhiqian.weixin.account.domain.entity.WeixinAppHost;
+import top.erzhiqian.weixin.account.domain.entity.AppHost;
 import top.erzhiqian.weixin.account.domain.repository.WeixinAppHostRepository;
 import top.erzhiqian.weixin.account.infrastructure.convert.WeixinAppHostConvert;
 import top.erzhiqian.weixin.account.infrastructure.po.WeixinAppHostPO;
@@ -30,21 +29,17 @@ public class WeixinAppHostRepositoryAdapt implements WeixinAppHostRepository {
     }
 
     @Override
-    public Optional<WeixinAppHost> findWeixinAppHost(WeixinAppId appId) {
+    public AppHost findWeixinAppHost(WeixinAppId appId) {
         if (null == appId) {
             throw new IllegalArgumentException("illegal app.");
         }
         Optional<WeixinAppHostPO> optional = appHostRepository.findByAppId(appId.appId());
-        if (!optional.isPresent()) {
-            return Optional.empty();
-        }
-
+//        return optional.map(convert::convertToEntity);
         return null;
     }
 
     @Override
-    public void save(WeixinAppHost appHost) {
-        WeixinAppHostPO po = convert.convertToHostPO(appHost);
-        appHostRepository.save(po);
+    public void save(AppHost appHost) {
+//        appHostRepository.save(po);
     }
 }

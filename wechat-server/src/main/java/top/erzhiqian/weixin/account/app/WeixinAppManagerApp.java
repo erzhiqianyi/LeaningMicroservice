@@ -3,7 +3,7 @@ package top.erzhiqian.weixin.account.app;
 import org.springframework.stereotype.Component;
 import top.erzhiqian.weixin.account.client.cmd.WeixinAppRegisterCmd;
 import top.erzhiqian.weixin.account.domain.entity.WeixinApp;
-import top.erzhiqian.weixin.account.domain.entity.WeixinAppHost;
+import top.erzhiqian.weixin.account.domain.entity.AppHost;
 import top.erzhiqian.weixin.account.domain.repository.WeixinAppHostRepository;
 import top.erzhiqian.weixin.account.domain.repository.WeixinAppRepository;
 import top.erzhiqian.weixin.account.domain.valueobject.HostAccountId;
@@ -25,8 +25,17 @@ public class WeixinAppManagerApp {
         this.hostRepository = hostRepository;
     }
 
-    public void registerWeixinApp(HostAccountId host, WeixinAppRegisterCmd cmd) {
+    public void registerWeixinApp(HostAccountId hostId, WeixinAppRegisterCmd cmd) {
         WeixinAppId appId = WeixinAppId.app(cmd.getAppId());
+        WeixinApp app = weixinAppRepository.findWeixinApp(appId);
+        /**
+        //todo 判断app是否已经存在
+        Optional<AppHost> optional = hostRepository.findWeixinAppHost(WeixinAppId.app(cmd.getAppId()));
+        if (optional.isPresent()) {
+            throw new IllegalArgumentException("app already register.");
+        }
+
+        host.registerApp();
         Optional<WeixinApp> optional = weixinAppRepository.findWeixinApp(appId);
         if (optional.isPresent()) {
             throw new IllegalArgumentException("weixin app already exists.");
@@ -38,8 +47,10 @@ public class WeixinAppManagerApp {
                 .state(cmd.getCertifiedStatus())
                 .hostType(cmd.getHostType())
                 .build();
-        WeixinAppHost appHost = WeixinAppHost.hostApp(host, weixinAccount);
+        AppHost appHost = null;
+//        AppHost.registerAccount(host, weixinAccount);
         hostRepository.save(appHost);
         weixinAppRepository.save(weixinAccount);
+         */
     }
 }

@@ -25,15 +25,24 @@ public class WeixinAppRepositoryAdapt implements WeixinAppRepository {
     }
 
     @Override
-    public Optional<WeixinApp> findWeixinApp(WeixinAppId weixinAppId) {
-        return Optional.empty();
+    public WeixinApp findWeixinApp(WeixinAppId weixinAppId) {
+        Optional<WeixinAppAccountPO> optional = findByAppId(weixinAppId);
+//        return optional.map(convert::convertToEntity);
+        return null;
+    }
+
+    private Optional<WeixinAppAccountPO> findByAppId(WeixinAppId weixinAppId) {
+        if (null == weixinAppId) {
+            throw new IllegalArgumentException("illegal app.");
+        }
+        return jdbcRepository.findByAppId(weixinAppId.appId());
     }
 
     @Override
     public void save(WeixinAppAccount weixinApp) {
-        Optional<WeixinAppAccountPO> optional = jdbcRepository.findByAppId(weixinApp.getAppId().appId());
+        Optional<WeixinAppAccountPO> optional = findByAppId(weixinApp.getAppId());
         WeixinAppAccountPO po = optional.isPresent() ? optional.get() : null;
-        po = convert.converToPO(weixinApp, po);
+        po = convert.convertToPO(weixinApp, po);
         jdbcRepository.save(po);
 
     }

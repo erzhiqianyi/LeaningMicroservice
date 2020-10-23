@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface WeixinAppRepository {
 
-    Optional<WeixinApp> findWeixinApp(WeixinAppId weixinAppId);
+    WeixinApp findWeixinApp(WeixinAppId weixinAppId);
 
     void save(WeixinAppAccount weixinApp);
 }

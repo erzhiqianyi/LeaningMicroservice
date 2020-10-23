@@ -1,0 +1,49 @@
+plugins {
+	id 'org.springframework.boot' version '2.3.4.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+	id 'java'
+	id 'groovy'
+
+}
+
+group = 'com.erzhiqian'
+version = '1.0'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+
+ext.springBootVersion = '2.3.4.RELEASE'
+
+
+
+dependencies {
+
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springBootVersion
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: springBootVersion
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: springBootVersion
+	compile group: 'de.flapdoodle.embed', name: 'de.flapdoodle.embed.mongo', version: '2.0.3'
+	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
+	compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1'
+
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+
+	testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion
+	testCompile group: 'org.spockframework', name: 'spock-spring', version: '1.1-groovy-2.4'
+	testCompile group: 'com.github.tomakehurst', name: 'wiremock', version: '2.17.0'
+	testCompile group: 'org.awaitility', name: 'awaitility-groovy', version: '3.1.0'
+
+}
+
+
+wrapper {
+	gradleVersion = '4.7'
+}
+
+test {
+	useJUnitPlatform()
+}
