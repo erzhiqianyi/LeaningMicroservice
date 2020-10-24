@@ -9,4 +9,8 @@ public enum Status {
     public boolean isInvalid() {
         return this == INVALID;
     }
+
+    public boolean isAtLeastStarted() {
+        return   !isInvalid() &&  this != TO_DO;
+    }
 }

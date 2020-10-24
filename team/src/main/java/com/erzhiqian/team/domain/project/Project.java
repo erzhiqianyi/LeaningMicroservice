@@ -10,6 +10,7 @@ import java.util.List;
 
 import static com.erzhiqian.team.domain.exceptions.DomainPreCondition.when;
 import static com.erzhiqian.team.domain.exceptions.ErrorCode.*;
+import static com.erzhiqian.team.domain.value.project.Status.IN_PROGRESS;
 import static com.erzhiqian.team.domain.value.project.Status.TO_DO;
 import static org.apache.commons.collections4.ListUtils.emptyIfNull;
 import static org.apache.commons.lang3.StringUtils.isBlank;
@@ -113,4 +114,23 @@ public class Project {
     public void assignTeam(Team team) {
         setAssignedTeam(null != team ? team.getName() :null);
     }
+
+    public void start() {
+        String message = "Error starting '" + identifier + "' project";
+        requireAssignedTeam(message);
+        requireUnStarted(message);
+        setStatus(IN_PROGRESS);
+    }
+
+    private void requireAssignedTeam(String message) {
+        when(isBlank(assignedTeam))
+                .thenInvalidEntity(UNASSIGNED_TEAM,message);
+    }
+
+    private void requireUnStarted(String message) {
+        when(status.isAtLeastStarted())
+                .thenInvalidEntity(PROJECT_ALREADY_STARTED, message);
+    }
+
+
 }

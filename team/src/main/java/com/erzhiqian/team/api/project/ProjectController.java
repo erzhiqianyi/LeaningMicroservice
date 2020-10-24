@@ -51,4 +51,11 @@ public class ProjectController {
     }
 
 
+    @ResponseStatus(NO_CONTENT)
+    @PatchMapping("/{projectIdentifier}/started")
+    public void startProject(@PathVariable String projectIdentifier) {
+        projectService.startProject(projectIdentifier);
+    }
+    
+
 }

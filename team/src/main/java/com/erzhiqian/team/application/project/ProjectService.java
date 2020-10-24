@@ -80,4 +80,12 @@ public class ProjectService {
     }
 
 
+    public void startProject(String projectIdentifier) {
+        Project project = projectRepository.getProject(projectIdentifier);
+        when(project == null)
+                .thenMissingEntity(NONEXISTENT_PROJECT, "Error starting '" + projectIdentifier + "' project");
+        project.start();
+        projectRepository.save(project);
+
+    }
 }
