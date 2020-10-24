@@ -1,6 +1,7 @@
 package com.erzhiqian.team.api.project;
 
 
+import com.erzhiqian.team.application.dto.project.NewProject;
 import com.erzhiqian.team.application.dto.project.NewProjectDraft;
 import com.erzhiqian.team.application.project.ProjectService;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,13 @@ public class ProjectController {
     @ResponseStatus(CREATED)
     @PostMapping("/drafts")
     public void createProject(@RequestBody NewProjectDraft newProjectDraft) {
-        projectService.createProject(newProjectDraft);
+        projectService.createProjectDraft(newProjectDraft);
+    }
+
+    @ResponseStatus(CREATED)
+    @PostMapping
+    public void createProject(@RequestBody NewProject newProject) {
+        projectService.createFullProject(newProject);
     }
 
 }

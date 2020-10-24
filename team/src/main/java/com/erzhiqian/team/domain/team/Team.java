@@ -1,6 +1,6 @@
 package com.erzhiqian.team.domain.team;
 
-import com.erzhiqian.team.domain.value.Employee;
+import com.erzhiqian.team.domain.value.team.Employee;
 import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;

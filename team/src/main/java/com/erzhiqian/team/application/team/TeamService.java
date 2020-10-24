@@ -6,7 +6,7 @@ import com.erzhiqian.team.application.dto.team.TeamMember;
 import com.erzhiqian.team.application.utils.DtoMapper;
 import com.erzhiqian.team.domain.team.Team;
 import com.erzhiqian.team.domain.team.TeamRepository;
-import com.erzhiqian.team.domain.value.Employee;
+import com.erzhiqian.team.domain.value.team.Employee;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

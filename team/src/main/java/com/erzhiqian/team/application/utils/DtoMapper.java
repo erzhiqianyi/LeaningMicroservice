@@ -1,10 +1,13 @@
 package com.erzhiqian.team.application.utils;
 
+import com.erzhiqian.team.application.dto.project.NewFeature;
 import com.erzhiqian.team.application.dto.team.ExistingTeam;
 import com.erzhiqian.team.application.dto.team.TeamMember;
 import com.erzhiqian.team.domain.team.Team;
-import com.erzhiqian.team.domain.value.Employee;
-import com.erzhiqian.team.domain.value.JobPosition;
+import com.erzhiqian.team.domain.value.project.Feature;
+import com.erzhiqian.team.domain.value.project.Requirement;
+import com.erzhiqian.team.domain.value.team.Employee;
+import com.erzhiqian.team.domain.value.team.JobPosition;
 
 import java.util.List;
 
@@ -20,7 +23,7 @@ public class DtoMapper {
 
     public static Employee mapToEmployee(TeamMember teamMember) {
         JobPosition jobPosition = mapToJobPosition(teamMember.getJobPosition());
-        return new Employee(teamMember.getFirstName(),teamMember.getLastName(),jobPosition);
+        return new Employee(teamMember.getFirstName(), teamMember.getLastName(), jobPosition);
     }
 
     private static JobPosition mapToJobPosition(String jobPosition) {
@@ -40,6 +43,20 @@ public class DtoMapper {
         return emptyIfNull(teams).stream()
                 .map(DtoMapper::mapToExistingTeam)
                 .collect(toList());
+    }
+
+    public static List<Feature> mapToFeatures(List<NewFeature> newFeatures) {
+        return emptyIfNull(newFeatures).stream()
+                .map(DtoMapper::mapToFeature)
+                .collect(toList());
+    }
+
+    private static Feature mapToFeature(NewFeature newFeature) {
+        if (newFeature == null) {
+            return null;
+        }
+        Requirement requirement = mapToRequirement(newFeature.getRequirement());
+        return new Feature(newFeature.getName(), requirement);
     }
 
     private static ExistingTeam mapToExistingTeam(Team team) {
@@ -63,4 +80,15 @@ public class DtoMapper {
     }
 
 
+    private static Requirement mapToRequirement(String requirement) {
+        if (isBlank(requirement)) {
+            return null;
+        }
+        try {
+            return Requirement.valueOf(requirement);
+        } catch (Exception e) {
+            return Requirement.INVALID;
+        }
+
+    }
 }

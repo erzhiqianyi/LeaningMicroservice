@@ -1,4 +1,4 @@
-package com.erzhiqian.team.domain.value;
+package com.erzhiqian.team.domain.value.team;
 
 public enum  JobPosition {
     DEVELOPER,
