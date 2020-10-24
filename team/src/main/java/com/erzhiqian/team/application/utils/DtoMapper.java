@@ -1,7 +1,9 @@
 package com.erzhiqian.team.application.utils;
 
+import com.erzhiqian.team.application.dto.project.ExistingProject;
 import com.erzhiqian.team.application.dto.project.ExistingProjectDraft;
 import com.erzhiqian.team.application.dto.project.NewFeature;
+import com.erzhiqian.team.application.dto.project.ProjectFeature;
 import com.erzhiqian.team.application.dto.team.ExistingTeam;
 import com.erzhiqian.team.application.dto.team.TeamMember;
 import com.erzhiqian.team.domain.project.Project;
@@ -57,6 +59,33 @@ public class DtoMapper {
         return emptyIfNull(projects).stream()
                 .map(DtoMapper::mapToExistingProjectDraft)
                 .collect(toList());
+    }
+
+
+    public static ExistingProject mapToExistingProject(Project project) {
+        ExistingProject existingProject = new ExistingProject();
+        existingProject.setIdentifier(project.getIdentifier());
+        existingProject.setName(project.getName());
+        existingProject.setTeam(project.getAssignedTeam());
+        existingProject.setStatus(project.getStatus().name());
+        existingProject.setFeatures(mapToProjectFeatures(project.getFeatures()));
+        return existingProject;
+    }
+
+    private static List<ProjectFeature> mapToProjectFeatures(List<Feature> features) {
+        return emptyIfNull(features)
+                .stream()
+                .map(DtoMapper::mapToProjectFeature)
+                .collect(toList());
+    }
+
+
+    private static ProjectFeature mapToProjectFeature(Feature feature) {
+        ProjectFeature projectFeature = new ProjectFeature();
+        projectFeature.setName(feature.getName());
+        projectFeature.setRequirement(feature.getRequirement().name());
+        projectFeature.setStatus(feature.getStatus().name());
+        return projectFeature;
     }
 
     private static Feature mapToFeature(NewFeature newFeature) {

@@ -1,6 +1,7 @@
 package com.erzhiqian.team.api.project;
 
 
+import com.erzhiqian.team.application.dto.project.ExistingProject;
 import com.erzhiqian.team.application.dto.project.ExistingProjectDraft;
 import com.erzhiqian.team.application.dto.project.NewProject;
 import com.erzhiqian.team.application.dto.project.NewProjectDraft;
@@ -39,5 +40,13 @@ public class ProjectController {
     public List<ExistingProjectDraft> getProjects() {
         return projectService.getProjects();
     }
+
+    @ResponseStatus(OK)
+    @GetMapping("/{projectIdentifier}")
+    public ExistingProject getProject(@PathVariable String projectIdentifier) {
+        return projectService.getProject(projectIdentifier);
+    }
+
+
 
 }

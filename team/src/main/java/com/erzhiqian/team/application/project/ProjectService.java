@@ -1,5 +1,6 @@
 package com.erzhiqian.team.application.project;
 
+import com.erzhiqian.team.application.dto.project.ExistingProject;
 import com.erzhiqian.team.application.dto.project.ExistingProjectDraft;
 import com.erzhiqian.team.application.dto.project.NewProject;
 import com.erzhiqian.team.application.dto.project.NewProjectDraft;
@@ -12,8 +13,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.erzhiqian.team.application.utils.DtoMapper.mapToExistingProjectDrafts;
-import static com.erzhiqian.team.application.utils.DtoMapper.mapToFeatures;
+import static com.erzhiqian.team.application.utils.DtoMapper.*;
+import static com.erzhiqian.team.domain.exceptions.DomainPreCondition.when;
+import static com.erzhiqian.team.domain.exceptions.ErrorCode.NONEXISTENT_PROJECT;
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @Service
 public class ProjectService {
@@ -31,12 +34,12 @@ public class ProjectService {
     public void createProjectDraft(NewProjectDraft newProjectDraft) {
         Project project = projectFactory.createProjectDraft(newProjectDraft);
         projectRepository.save(project);
-                
+
     }
 
     public void createFullProject(NewProject newProject) {
         List<Feature> features = mapToFeatures(newProject.getFeatures());
-        Project project = projectFactory.createFullProject(newProject.getName(),features);
+        Project project = projectFactory.createFullProject(newProject.getName(), features);
         projectRepository.save(project);
     }
 
@@ -44,4 +47,15 @@ public class ProjectService {
         List<Project> projects = projectRepository.getProjects();
         return mapToExistingProjectDrafts(projects);
     }
+
+    public ExistingProject getProject(String projectIdentifier) {
+        when(isBlank(projectIdentifier)).
+                thenMissingEntity(NONEXISTENT_PROJECT, "Error getting '" + projectIdentifier + "' project");
+        Project project = projectRepository.getProject(projectIdentifier);
+        when(null == project).
+                thenMissingEntity(NONEXISTENT_PROJECT, "Error getting '" + projectIdentifier + "' project");
+        return mapToExistingProject(project);
+    }
+
+
 }

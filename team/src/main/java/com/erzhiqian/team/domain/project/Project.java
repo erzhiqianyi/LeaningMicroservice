@@ -2,6 +2,7 @@ package com.erzhiqian.team.domain.project;
 
 import com.erzhiqian.team.domain.value.project.Feature;
 import com.erzhiqian.team.domain.value.project.Status;
+import lombok.Getter;
 import org.springframework.data.annotation.Id;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import static com.erzhiqian.team.domain.value.project.Status.TODO;
 import static org.apache.commons.collections4.ListUtils.emptyIfNull;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
+@Getter
 public class Project {
 
     @Id
@@ -24,6 +26,7 @@ public class Project {
     private String assignedTeam;
 
     private List<Feature> features;
+    
     public Project(String identifier, String name) {
         this(identifier, name, null);
     }
@@ -69,11 +72,5 @@ public class Project {
 
     }
 
-    public String getIdentifier() {
-        return identifier;
-    }
-
-    public String getName() {
-        return name;
-    }
+   
 }

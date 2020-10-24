@@ -7,6 +7,7 @@ import com.erzhiqian.team.application.dto.project.NewProjectDraft
 import spock.lang.Unroll
 
 import static org.springframework.http.HttpStatus.CREATED
+import static org.springframework.http.HttpStatus.NOT_FOUND
 import static org.springframework.http.HttpStatus.OK
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY
 
@@ -119,6 +120,15 @@ class ProjectSpecification  extends BasicSpecification{
         response.body == []
     }
 
+
+    def "Should not browse project if it does not exist"() {
+        when:
+        def response = get('/projects/abc', Map)
+
+        then:
+        response.statusCode == NOT_FOUND
+        response.body.errorCode  == 40016
+    }
 
 
 }

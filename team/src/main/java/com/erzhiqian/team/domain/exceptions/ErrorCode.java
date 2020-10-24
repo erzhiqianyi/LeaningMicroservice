@@ -18,8 +18,7 @@ public enum  ErrorCode {
     EMPTY_FEATURE_STATUS(40013),
     EMPTY_FEATURE_REQUIREMENT(40014),
     INVALID_FEATURE_REQUIREMENT(40015),
-
-
+    NONEXISTENT_PROJECT(40016)
     ;
 
     private Integer code;

@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
 @Service
 public class ProjectRepositoryAdapt implements ProjectRepository {
 
@@ -24,5 +26,13 @@ public class ProjectRepositoryAdapt implements ProjectRepository {
     @Override
     public List<Project> getProjects() {
         return repository.findAll();
+    }
+
+    @Override
+    public Project getProject(String projectIdentifier) {
+        if (isBlank(projectIdentifier)){
+            return null;
+        }
+        return  repository.findById(projectIdentifier);
     }
 }

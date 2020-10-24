@@ -22,6 +22,10 @@ public class MongoDbProjectRepository {
     }
 
     public List<Project> findAll() {
-        return mongo.findAll(Project.class,PROJECT_COLLECTION);
+        return mongo.findAll(Project.class, PROJECT_COLLECTION);
+    }
+
+    public Project findById(String projectIdentifier) {
+        return mongo.findById(projectIdentifier, Project.class, PROJECT_COLLECTION);
     }
 }

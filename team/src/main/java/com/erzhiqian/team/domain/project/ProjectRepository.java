@@ -6,4 +6,6 @@ public interface ProjectRepository {
     void save(Project project);
 
     List<Project> getProjects();
+
+    Project getProject(String projectIdentifier);
 }
