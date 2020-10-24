@@ -1,17 +1,13 @@
 package com.erzhiqian.team.api.project;
 
 
-import com.erzhiqian.team.application.dto.project.ExistingProject;
-import com.erzhiqian.team.application.dto.project.ExistingProjectDraft;
-import com.erzhiqian.team.application.dto.project.NewProject;
-import com.erzhiqian.team.application.dto.project.NewProjectDraft;
+import com.erzhiqian.team.application.dto.project.*;
 import com.erzhiqian.team.application.project.ProjectService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/projects")
@@ -47,6 +43,12 @@ public class ProjectController {
         return projectService.getProject(projectIdentifier);
     }
 
+
+    @ResponseStatus(NO_CONTENT)
+    @PutMapping("/{projectIdentifier}")
+    public void updateProject(@PathVariable String projectIdentifier, @RequestBody UpdatedProject updatedProject) {
+        projectService.updateProject(projectIdentifier, updatedProject);
+    }
 
 
 }

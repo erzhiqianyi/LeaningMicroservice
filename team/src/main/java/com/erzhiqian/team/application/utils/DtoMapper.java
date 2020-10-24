@@ -10,6 +10,7 @@ import com.erzhiqian.team.domain.project.Project;
 import com.erzhiqian.team.domain.team.Team;
 import com.erzhiqian.team.domain.value.project.Feature;
 import com.erzhiqian.team.domain.value.project.Requirement;
+import com.erzhiqian.team.domain.value.project.Status;
 import com.erzhiqian.team.domain.value.team.Employee;
 import com.erzhiqian.team.domain.value.team.JobPosition;
 
@@ -49,10 +50,35 @@ public class DtoMapper {
                 .collect(toList());
     }
 
-    public static List<Feature> mapToFeatures(List<NewFeature> newFeatures) {
+    public static List<Feature> newFeatureMapToFeatures(List<NewFeature> newFeatures) {
         return emptyIfNull(newFeatures).stream()
-                .map(DtoMapper::mapToFeature)
+                .map(DtoMapper::newFeatureMapToFeature)
                 .collect(toList());
+    }
+
+    public static List<Feature> projectFeatureMapToFeatures(List<ProjectFeature> projectFeatures) {
+        return emptyIfNull(projectFeatures).stream()
+                .map(DtoMapper::projectFeatureMapToFeature)
+                .collect(toList());
+    }
+
+    private static Feature projectFeatureMapToFeature(ProjectFeature projectFeature) {
+        Status status = mapToStatus(projectFeature.getStatus());
+        Requirement requirement = mapToRequirement(projectFeature.getRequirement());
+        Feature feature = new Feature(projectFeature.getName(), requirement, status);
+        return feature;
+    }
+
+    private static Status mapToStatus(String status) {
+        if (isBlank(status)) {
+            return null;
+        }
+        try {
+            return Status.valueOf(status);
+        } catch (Exception e) {
+            return Status.INVALID;
+        }
+
     }
 
     public static List<ExistingProjectDraft> mapToExistingProjectDrafts(List<Project> projects) {
@@ -88,7 +114,7 @@ public class DtoMapper {
         return projectFeature;
     }
 
-    private static Feature mapToFeature(NewFeature newFeature) {
+    private static Feature newFeatureMapToFeature(NewFeature newFeature) {
         if (newFeature == null) {
             return null;
         }

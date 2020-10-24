@@ -8,4 +8,5 @@ public interface ProjectRepository {
     List<Project> getProjects();
 
     Project getProject(String projectIdentifier);
+
 }

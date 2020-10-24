@@ -1,18 +1,25 @@
 package com.erzhiqian.team.specification.team
 
 import com.erzhiqian.team.BasicSpecification
+import com.erzhiqian.team.application.dto.project.ExistingProjectDraft
+import com.erzhiqian.team.application.dto.project.ExistingProject
 import com.erzhiqian.team.application.dto.project.NewFeature
 import com.erzhiqian.team.application.dto.project.NewProject
 import com.erzhiqian.team.application.dto.project.NewProjectDraft
+import com.erzhiqian.team.application.dto.project.ProjectFeature
+import com.erzhiqian.team.application.dto.project.UpdatedProject
+import com.erzhiqian.team.application.dto.team.ExistingTeam
+import com.erzhiqian.team.application.dto.team.NewTeam
+import org.springframework.core.ParameterizedTypeReference
 import spock.lang.Unroll
 
 import static org.springframework.http.HttpStatus.CREATED
 import static org.springframework.http.HttpStatus.NOT_FOUND
+import static org.springframework.http.HttpStatus.NO_CONTENT
 import static org.springframework.http.HttpStatus.OK
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY
 
 class ProjectSpecification  extends BasicSpecification{
-
 
     def "Should create new project draft"() {
         given:
@@ -129,6 +136,223 @@ class ProjectSpecification  extends BasicSpecification{
         response.statusCode == NOT_FOUND
         response.body.errorCode  == 40016
     }
+
+
+    def "Should create new project draft and browse it"() {
+        given:
+        def projectDraft = new NewProjectDraft(name: 'Project 1')
+
+        when:
+        def response = post('/projects/drafts', projectDraft)
+
+        then:
+        response.statusCode == CREATED
+
+        when:
+        response = get('/projects', new ParameterizedTypeReference<List<ExistingProjectDraft>>() {})
+
+        then:
+        response.statusCode == OK
+        response.body != null
+        response.body.size() == 1
+        with(response.body[0]) {
+            identifier != null
+            name == 'Project 1'
+        }
+
+        and:
+        def projectIdentifier = response.body[0].identifier
+
+        when:
+        response = get("/projects/$projectIdentifier", ExistingProject)
+
+        then:
+        response.statusCode == OK
+        response.body != null
+        with(response.body) {
+            identifier == projectIdentifier
+            name == 'Project 1'
+            status == 'TO_DO'
+            team == null
+            features == []
+        }
+    }
+
+   @Unroll
+    def "Should create new full project with a #requirement feature and browse it"() {
+        given:
+        def feature = new NewFeature(name: 'Feature 1', requirement: requirement)
+        def project = new NewProject(name: 'Project 1', features: [feature])
+
+        when:
+        def response = post('/projects', project)
+
+        then:
+        response.statusCode == CREATED
+
+        when:
+        response = get('/projects', new ParameterizedTypeReference<List<ExistingProjectDraft>>() {})
+
+        then:
+        response.statusCode == OK
+        response.body != null
+        response.body.size() == 1
+        with(response.body[0]) {
+            identifier != null
+            name == 'Project 1'
+        }
+
+        and:
+        def projectIdentifier = response.body[0].identifier
+
+        when:
+        response = get("/projects/$projectIdentifier", ExistingProject)
+
+        then:
+        response.statusCode == OK
+        response.body != null
+        with(response.body) {
+            identifier == projectIdentifier
+            name == 'Project 1'
+            status == 'TO_DO'
+            team == null
+            features != null
+            features.size() == 1
+            features[0].name == 'Feature 1'
+            features[0].status == 'TO_DO'
+            features[0].requirement == requirement
+        }
+
+        where:
+        requirement << ['OPTIONAL', 'RECOMMENDED', 'NECESSARY']
+    }
+
+
+    @Unroll
+    def "Should update a project setting a #requirement feature with #featureStatus status and browse it"() {
+        given:
+        def feature = new NewFeature(name: 'Feature 1', requirement: requirement)
+        def project = new NewProject(name: 'Project 1', features: [feature])
+        post('/projects', project)
+        def newTeam = new NewTeam(name: 'Team 2')
+        post('/teams', newTeam)
+        def projectIdentifier = get('/projects', new ParameterizedTypeReference<List<ExistingProjectDraft>>() {}).body[0].identifier
+        def projectFeature = new ProjectFeature(name: 'Feature 2', status: featureStatus, requirement: requirement)
+        def updatedProject = new UpdatedProject(name: 'Project 2', team: 'Team 2', features: [projectFeature])
+
+        when:
+        def response = put("/projects/$projectIdentifier", updatedProject)
+
+        then:
+        response.statusCode == NO_CONTENT
+
+        when:
+        response = get("/projects/$projectIdentifier", ExistingProject)
+
+        then:
+        response.statusCode == OK
+        response.body != null
+        with(response.body) {
+            identifier == projectIdentifier
+            name == 'Project 2'
+            status == 'TO_DO'
+            team == 'Team 2'
+            features != null
+            features.size() == 1
+            features[0].name == 'Feature 2'
+            features[0].status == featureStatus
+            features[0].requirement == requirement
+        }
+
+        when:
+        response = get('/teams', new ParameterizedTypeReference<List<ExistingTeam>>() {})
+
+        then:
+        response.statusCode == OK
+        response.body != null
+        response.body.size() == 1
+        with(response.body[0]) {
+            name == 'Team 2'
+            currentlyImplementedProjects == 1
+            !busy
+            members == []
+        }
+
+        where:
+        featureStatus | requirement
+        'TO_DO'       | 'OPTIONAL'
+        'IN_PROGRESS' | 'RECOMMENDED'
+        'DONE'        | 'NECESSARY'
+    }
+
+    @Unroll
+    def "Should not update a project with an empty name"() {
+        given:
+        def project = new NewProject(name: 'Project 1', features: [])
+        post('/projects', project)
+        def projectIdentifier = get('/projects', new ParameterizedTypeReference<List<ExistingProjectDraft>>() {}).body[0].identifier
+        def updatedProject = new UpdatedProject(name: name, features: [])
+
+        when:
+        def response = put("/projects/$projectIdentifier", updatedProject)
+
+        then:
+        response.statusCode == UNPROCESSABLE_ENTITY
+        response.body.errorCode == 40010
+
+        where:
+        name << [null, '', '  ']
+    }
+
+    @Unroll
+    def "Should not update a project with unnamed feature"() {
+        given:
+        def project = new NewProject(name: 'Project 1', features: [])
+        post('/projects', project)
+        def projectIdentifier = get('/projects', new ParameterizedTypeReference<List<ExistingProjectDraft>>() {}).body[0].identifier
+        def projectFeature = new ProjectFeature(name: name, status: 'IN_PROGRESS', requirement: 'OPTIONAL')
+        def updatedProject = new UpdatedProject(name: 'Project 1', features: [projectFeature])
+
+        when:
+        def response = put("/projects/$projectIdentifier", updatedProject)
+
+        then:
+        response.statusCode == UNPROCESSABLE_ENTITY
+        response.body.errorCode == 40012
+
+        where:
+        name << [null, '', '  ']
+    }
+
+    @Unroll
+    def "Should not update a project with feature with #status status or #requirement requirement"() {
+        given:
+        def project = new NewProject(name: 'Project 1', features: [])
+        post('/projects', project)
+        def projectIdentifier = get('/projects', new ParameterizedTypeReference<List<ExistingProjectDraft>>() {}).body[0].identifier
+        def projectFeature = new ProjectFeature(name: 'Feature 1', status: status, requirement: requirement)
+        def updatedProject = new UpdatedProject(name: 'Project 1', features: [projectFeature])
+
+        when:
+        def response = put("/projects/$projectIdentifier", updatedProject)
+
+        then:
+        response.statusCode == UNPROCESSABLE_ENTITY
+        response.body.errorCode ==  errorCode
+
+        where:
+        status           | requirement           || errorCode
+        null             | 'OPTIONAL'            || 40013
+        ''               | 'OPTIONAL'            || 40013
+        '  '             | 'OPTIONAL'            || 40013
+        'INVALID_STATUS' | 'OPTIONAL'            || 40017
+        'DONE'           | null                  || 40014
+        'DONE'           | ''                    || 40014
+        'DONE'           | '  '                  || 40014
+        'DONE'           | 'INVALID_REQUIREMENT' || 40015
+    }
+
+
 
 
 }

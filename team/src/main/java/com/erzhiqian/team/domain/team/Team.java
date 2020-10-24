@@ -71,4 +71,8 @@ public class Team {
     public List<Employee> getMembers() {
         return members;
     }
+
+    public void addCurrentlyImplementedProject() {
+        currentlyImplementApps++;
+    }
 }
