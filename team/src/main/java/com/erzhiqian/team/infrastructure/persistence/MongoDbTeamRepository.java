@@ -4,6 +4,8 @@ import com.erzhiqian.team.domain.team.Team;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
@@ -26,6 +28,10 @@ public class MongoDbTeamRepository {
     }
 
     public Team findById(String name) {
-        return mongo.findById(name,Team.class,TEAMS_COLLECTION);
+        return mongo.findById(name, Team.class, TEAMS_COLLECTION);
+    }
+
+    public List<Team> findAll() {
+        return mongo.findAll(Team.class, TEAMS_COLLECTION);
     }
 }

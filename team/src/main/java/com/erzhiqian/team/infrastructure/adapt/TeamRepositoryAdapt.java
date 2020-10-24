@@ -5,6 +5,8 @@ import com.erzhiqian.team.domain.team.TeamRepository;
 import com.erzhiqian.team.infrastructure.persistence.MongoDbTeamRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TeamRepositoryAdapt implements TeamRepository {
     
@@ -28,5 +30,10 @@ public class TeamRepositoryAdapt implements TeamRepository {
     @Override
     public void save(Team team) {
         repository.save(team);
+    }
+
+    @Override
+    public List<Team> getTeams() {
+        return repository.findAll();
     }
 }

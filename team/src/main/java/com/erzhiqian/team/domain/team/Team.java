@@ -11,6 +11,9 @@ import static com.erzhiqian.team.domain.exceptions.ErrorCode.*;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 public class Team {
+
+    private static final int BUSY_TEAM_THRESHOLD = 3;
+
     @Id
     private String name;
 
@@ -55,5 +58,17 @@ public class Team {
                 .thenInvalidEntity(EMPTY_MEMBER_JOB_POSITION, message);
         when(member.hasInvalidJobPosition())
                 .thenInvalidEntity(INVALID_MEMBER_JOB_POSITION, message);
+    }
+
+    public boolean isBusy() {
+        return currentlyImplementApps > BUSY_TEAM_THRESHOLD;
+    }
+
+    public int getCurrentlyImplementApps() {
+        return currentlyImplementApps;
+    }
+
+    public List<Employee> getMembers() {
+        return members;
     }
 }

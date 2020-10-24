@@ -7,6 +7,7 @@ import spock.lang.Unroll
 
 import static org.springframework.http.HttpStatus.CREATED
 import static org.springframework.http.HttpStatus.NOT_FOUND
+import static org.springframework.http.HttpStatus.OK
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY
 
 class TeamSpecification  extends BasicSpecification{
@@ -134,6 +135,15 @@ class TeamSpecification  extends BasicSpecification{
         then:
         response.statusCode == NOT_FOUND
         response.body.errorCode  == 40003
+    }
+
+    def "Should browse teams if none exists"() {
+        when:
+        def response = get('/teams', List)
+
+        then:
+        response.statusCode == OK
+        response.body == []
     }
 
 }
