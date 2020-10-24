@@ -1,8 +1,8 @@
 package com.erzhiqian.team.specification.team
 
 import com.erzhiqian.team.BasicSpecification
-import com.erzhiqian.team.application.dto.NewTeam
-import com.erzhiqian.team.application.dto.TeamMember
+import com.erzhiqian.team.application.dto.team.NewTeam
+import com.erzhiqian.team.application.dto.team.TeamMember
 import spock.lang.Unroll
 
 import static org.springframework.http.HttpStatus.CREATED

@@ -1,8 +1,8 @@
-package com.erzhiqian.team.application;
+package com.erzhiqian.team.application.team;
 
-import com.erzhiqian.team.application.dto.ExistingTeam;
-import com.erzhiqian.team.application.dto.NewTeam;
-import com.erzhiqian.team.application.dto.TeamMember;
+import com.erzhiqian.team.application.dto.team.ExistingTeam;
+import com.erzhiqian.team.application.dto.team.NewTeam;
+import com.erzhiqian.team.application.dto.team.TeamMember;
 import com.erzhiqian.team.application.utils.DtoMapper;
 import com.erzhiqian.team.domain.team.Team;
 import com.erzhiqian.team.domain.team.TeamRepository;

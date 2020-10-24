@@ -1,9 +1,9 @@
-package com.erzhiqian.team.api;
+package com.erzhiqian.team.api.team;
 
-import com.erzhiqian.team.application.TeamService;
-import com.erzhiqian.team.application.dto.ExistingTeam;
-import com.erzhiqian.team.application.dto.NewTeam;
-import com.erzhiqian.team.application.dto.TeamMember;
+import com.erzhiqian.team.application.team.TeamService;
+import com.erzhiqian.team.application.dto.team.ExistingTeam;
+import com.erzhiqian.team.application.dto.team.NewTeam;
+import com.erzhiqian.team.application.dto.team.TeamMember;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

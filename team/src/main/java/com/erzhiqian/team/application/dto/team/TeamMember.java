@@ -1,4 +1,4 @@
-package com.erzhiqian.team.application.dto;
+package com.erzhiqian.team.application.dto.team;
 
 import lombok.Data;
 
