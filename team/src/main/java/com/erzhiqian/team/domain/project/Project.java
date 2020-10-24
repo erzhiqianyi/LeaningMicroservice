@@ -69,5 +69,11 @@ public class Project {
 
     }
 
+    public String getIdentifier() {
+        return identifier;
+    }
 
+    public String getName() {
+        return name;
+    }
 }

@@ -1,8 +1,10 @@
 package com.erzhiqian.team.application.utils;
 
+import com.erzhiqian.team.application.dto.project.ExistingProjectDraft;
 import com.erzhiqian.team.application.dto.project.NewFeature;
 import com.erzhiqian.team.application.dto.team.ExistingTeam;
 import com.erzhiqian.team.application.dto.team.TeamMember;
+import com.erzhiqian.team.domain.project.Project;
 import com.erzhiqian.team.domain.team.Team;
 import com.erzhiqian.team.domain.value.project.Feature;
 import com.erzhiqian.team.domain.value.project.Requirement;
@@ -51,6 +53,12 @@ public class DtoMapper {
                 .collect(toList());
     }
 
+    public static List<ExistingProjectDraft> mapToExistingProjectDrafts(List<Project> projects) {
+        return emptyIfNull(projects).stream()
+                .map(DtoMapper::mapToExistingProjectDraft)
+                .collect(toList());
+    }
+
     private static Feature mapToFeature(NewFeature newFeature) {
         if (newFeature == null) {
             return null;
@@ -91,4 +99,12 @@ public class DtoMapper {
         }
 
     }
+
+    private static ExistingProjectDraft mapToExistingProjectDraft(Project project) {
+        ExistingProjectDraft existingProjectDraft = new ExistingProjectDraft();
+        existingProjectDraft.setIdentifier(project.getIdentifier());
+        existingProjectDraft.setName(project.getName());
+        return existingProjectDraft;
+    }
+
 }

@@ -5,6 +5,8 @@ import com.erzhiqian.team.domain.project.ProjectRepository;
 import com.erzhiqian.team.infrastructure.persistence.MongoDbProjectRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProjectRepositoryAdapt implements ProjectRepository {
 
@@ -17,5 +19,10 @@ public class ProjectRepositoryAdapt implements ProjectRepository {
     @Override
     public void save(Project project) {
         repository.save(project);
+    }
+
+    @Override
+    public List<Project> getProjects() {
+        return repository.findAll();
     }
 }

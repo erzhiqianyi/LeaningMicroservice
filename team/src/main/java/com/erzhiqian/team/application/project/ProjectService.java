@@ -1,5 +1,6 @@
 package com.erzhiqian.team.application.project;
 
+import com.erzhiqian.team.application.dto.project.ExistingProjectDraft;
 import com.erzhiqian.team.application.dto.project.NewProject;
 import com.erzhiqian.team.application.dto.project.NewProjectDraft;
 import com.erzhiqian.team.application.utils.DtoMapper;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.erzhiqian.team.application.utils.DtoMapper.mapToExistingProjectDrafts;
 import static com.erzhiqian.team.application.utils.DtoMapper.mapToFeatures;
 
 @Service
@@ -36,5 +38,10 @@ public class ProjectService {
         List<Feature> features = mapToFeatures(newProject.getFeatures());
         Project project = projectFactory.createFullProject(newProject.getName(),features);
         projectRepository.save(project);
+    }
+
+    public List<ExistingProjectDraft> getProjects() {
+        List<Project> projects = projectRepository.getProjects();
+        return mapToExistingProjectDrafts(projects);
     }
 }

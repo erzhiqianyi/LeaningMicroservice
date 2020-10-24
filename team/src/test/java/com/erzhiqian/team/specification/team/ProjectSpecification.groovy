@@ -7,6 +7,7 @@ import com.erzhiqian.team.application.dto.project.NewProjectDraft
 import spock.lang.Unroll
 
 import static org.springframework.http.HttpStatus.CREATED
+import static org.springframework.http.HttpStatus.OK
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY
 
 class ProjectSpecification  extends BasicSpecification{
@@ -107,6 +108,15 @@ class ProjectSpecification  extends BasicSpecification{
         ''                    | 40014
         '  '                  | 40014
         'INVALID_REQUIREMENT' | 40015
+    }
+
+    def "Should browse projects if none exists"() {
+        when:
+        def response = get('/projects', List)
+
+        then:
+        response.statusCode == OK
+        response.body == []
     }
 
 
