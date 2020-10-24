@@ -24,4 +24,8 @@ public class MongoDbTeamRepository {
     public void save(Team team) {
         mongo.save(team, TEAMS_COLLECTION);
     }
+
+    public Team findById(String name) {
+        return mongo.findById(name,Team.class,TEAMS_COLLECTION);
+    }
 }

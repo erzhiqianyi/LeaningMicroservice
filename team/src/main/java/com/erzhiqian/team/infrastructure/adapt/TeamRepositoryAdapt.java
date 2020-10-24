@@ -21,6 +21,11 @@ public class TeamRepositoryAdapt implements TeamRepository {
     }
 
     @Override
+    public Team findByName(String name) {
+        return repository.findById(name);
+    }
+
+    @Override
     public void save(Team team) {
         repository.save(team);
     }
