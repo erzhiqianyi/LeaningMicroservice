@@ -1,14 +1,13 @@
-package com.erzhiqian.team.infrastructure.error;
-
-import com.erzhiqian.team.domain.exceptions.ErrorCode;
+package com.erzhiqian.wechatappmanager.common.response;
 
 public class ErrorMessage {
     private Integer errorCode;
 
     private String message;
-    
+
+
     public ErrorMessage(ErrorCode errorCode,String message) {
-        this.errorCode = errorCode.getCode();
+        this.errorCode = errorCode.errorCode();
         this.message = message;
     }
 
@@ -19,5 +18,6 @@ public class ErrorMessage {
     public String getMessage() {
         return message;
     }
+
 
 }
