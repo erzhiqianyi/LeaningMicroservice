@@ -75,4 +75,8 @@ public class Team {
     public void addCurrentlyImplementedProject() {
         currentlyImplementApps++;
     }
+
+    public void removeCurrentlyImplementedProject() {
+       currentlyImplementApps--; 
+    }
 }

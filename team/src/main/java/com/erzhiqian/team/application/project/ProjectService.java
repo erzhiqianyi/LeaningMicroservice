@@ -1,13 +1,16 @@
 package com.erzhiqian.team.application.project;
 
 import com.erzhiqian.team.application.dto.project.*;
+import com.erzhiqian.team.domain.project.FeatureChecker;
 import com.erzhiqian.team.domain.project.Project;
 import com.erzhiqian.team.domain.project.ProjectFactory;
 import com.erzhiqian.team.domain.project.ProjectRepository;
 import com.erzhiqian.team.domain.services.ProjectTeamAssigner;
 import com.erzhiqian.team.domain.team.Team;
 import com.erzhiqian.team.domain.team.TeamRepository;
+import com.erzhiqian.team.domain.value.project.EndedProject;
 import com.erzhiqian.team.domain.value.project.Feature;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +18,7 @@ import java.util.List;
 import static com.erzhiqian.team.application.utils.DtoMapper.*;
 import static com.erzhiqian.team.domain.exceptions.DomainPreCondition.when;
 import static com.erzhiqian.team.domain.exceptions.ErrorCode.NONEXISTENT_PROJECT;
+import static com.erzhiqian.team.domain.project.FeatureChecker.resolveFeatureChecker;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @Service
@@ -28,14 +32,19 @@ public class ProjectService {
 
     private ProjectTeamAssigner  projectTeamAssigner;
 
+
+    private ApplicationEventPublisher eventPublisher;
+
     public ProjectService(ProjectFactory projectFactory,
                           ProjectRepository projectRepository,
                           TeamRepository teamRepository,
-                          ProjectTeamAssigner projectTeamAssigner) {
+                          ProjectTeamAssigner projectTeamAssigner,
+                          ApplicationEventPublisher eventPublisher) {
         this.projectFactory = projectFactory;
         this.projectRepository = projectRepository;
         this.teamRepository = teamRepository;
         this.projectTeamAssigner = projectTeamAssigner;
+        this.eventPublisher = eventPublisher;
     }
 
     public void createProjectDraft(NewProjectDraft newProjectDraft) {
@@ -87,5 +96,20 @@ public class ProjectService {
         project.start();
         projectRepository.save(project);
 
+    }
+
+    public void endProject(String projectIdentifier, ProjectEndingCondition endingCondition) {
+        Project project = projectRepository.getProject(projectIdentifier);
+        when(project == null)
+                .thenMissingEntity(NONEXISTENT_PROJECT, "Error ending '" + projectIdentifier + "' project");
+        FeatureChecker featureChecker = resolveFeatureChecker(endingCondition.isOnlyNecessaryFeatureDone());
+        EndedProject endedProject = project.end(featureChecker);
+        if (project.hasAssignedTeam()) {
+            Team assignedTeam = teamRepository.findByName(project.getAssignedTeam());
+            assignedTeam.removeCurrentlyImplementedProject();
+            teamRepository.save(assignedTeam);
+        }
+        projectRepository.save(project);
+        eventPublisher.publishEvent(endedProject);
     }
 }

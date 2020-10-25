@@ -6,6 +6,7 @@ import com.erzhiqian.team.application.dto.project.ExistingProject
 import com.erzhiqian.team.application.dto.project.NewFeature
 import com.erzhiqian.team.application.dto.project.NewProject
 import com.erzhiqian.team.application.dto.project.NewProjectDraft
+import com.erzhiqian.team.application.dto.project.ProjectEndingCondition
 import com.erzhiqian.team.application.dto.project.ProjectFeature
 import com.erzhiqian.team.application.dto.project.UpdatedProject
 import com.erzhiqian.team.application.dto.team.ExistingTeam
@@ -415,6 +416,125 @@ class ProjectSpecification  extends BasicSpecification{
     }
 
 
+    @Unroll
+    def "Should end a project when ending condition is fulfilled"() {
+        given:
+        stubReportingService()
+        def project = new NewProject(name: 'Project 1', features: [])
+        post('/projects', project)
+        def newTeam = new NewTeam(name: 'Team 1')
+        post('/teams', newTeam)
+        def projectIdentifier = get('/projects', new ParameterizedTypeReference<List<ExistingProjectDraft>>() {}).body[0].identifier
+        def updatedProject = new UpdatedProject(name: 'Project 1', team: 'Team 1', features: features)
+        put("/projects/$projectIdentifier", updatedProject)
+        patch("/projects/$projectIdentifier/started")
+        def endingCondition = new ProjectEndingCondition(onlyNecessaryFeatureDone: onlyNecessaryFeatureDone)
+
+        when:
+        def response = patch("/projects/$projectIdentifier/ended", endingCondition)
+
+        then:
+        response.statusCode == NO_CONTENT
+        with(get("/projects/$projectIdentifier", ExistingProject).body) {
+            status == 'DONE'
+        }
+        with(get('/teams', new ParameterizedTypeReference<List<ExistingTeam>>() {}).body[0]) {
+            name == 'Team 1'
+            currentlyImplementedProjects == 0
+        }
+        verifyReportWasSent(projectIdentifier)
+
+        where:
+        features                                                                                | onlyNecessaryFeatureDone
+        []                                                                                      | true
+        []                                                                                      | false
+        [new ProjectFeature(name: 'Feature 1', status: 'DONE', requirement: 'NECESSARY')]       | true
+        [new ProjectFeature(name: 'Feature 1', status: 'IN_PROGRESS', requirement: 'OPTIONAL')] | true
+        [new ProjectFeature(name: 'Feature 1', status: 'DONE', requirement: 'NECESSARY')]       | false
+    }
+
+    @Unroll
+    def "Should not end a project when ending condition is not fulfilled"() {
+        given:
+        stubReportingService()
+        def project = new NewProject(name: 'Project 1', features: [])
+        post('/projects', project)
+        def newTeam = new NewTeam(name: 'Team 1')
+        post('/teams', newTeam)
+        def projectIdentifier = get('/projects', new ParameterizedTypeReference<List<ExistingProjectDraft>>() {}).body[0].identifier
+        def updatedProject = new UpdatedProject(name: 'Project 1', team: 'Team 1', features: features)
+        put("/projects/$projectIdentifier", updatedProject)
+        patch("/projects/$projectIdentifier/started")
+        def endingCondition = new ProjectEndingCondition(onlyNecessaryFeatureDone: onlyNecessaryFeatureDone)
+
+        when:
+        def response = patch("/projects/$projectIdentifier/ended", endingCondition)
+
+        then:
+        response.statusCode == UNPROCESSABLE_ENTITY
+        response.body.errorCode == 40020
+        verifyReportWasNotSent(projectIdentifier)
+
+        where:
+        features                                                                                | onlyNecessaryFeatureDone
+        [new ProjectFeature(name: 'Feature 1', status: 'TO_DO', requirement: 'NECESSARY')]      | true
+        [new ProjectFeature(name: 'Feature 1', status: 'IN_PROGRESS', requirement: 'OPTIONAL')] | false
+    }
+
+    def "Should not end an unstarted project"() {
+        given:
+        stubReportingService()
+        def project = new NewProject(name: 'Project 1', features: [])
+        post('/projects', project)
+        def projectIdentifier = get('/projects', new ParameterizedTypeReference<List<ExistingProjectDraft>>() {}).body[0].identifier
+        def endingCondition = new ProjectEndingCondition(onlyNecessaryFeatureDone: false)
+
+        when:
+        def response = patch("/projects/$projectIdentifier/ended", endingCondition)
+
+        then:
+        response.statusCode == UNPROCESSABLE_ENTITY
+        response.body.errorCode == 40021
+        verifyReportWasNotSent(projectIdentifier)
+    }
+
+    def "Should not end an already ended project"() {
+        given:
+        stubReportingService()
+        def project = new NewProject(name: 'Project 1', features: [])
+        post('/projects', project)
+        def newTeam = new NewTeam(name: 'Team 1')
+        post('/teams', newTeam)
+        def projectIdentifier = get('/projects', new ParameterizedTypeReference<List<ExistingProjectDraft>>() {}).body[0].identifier
+        def updatedProject = new UpdatedProject(name: 'Project 1', team: 'Team 1', features: [])
+        put("/projects/$projectIdentifier", updatedProject)
+        patch("/projects/$projectIdentifier/started")
+        def endingCondition = new ProjectEndingCondition(onlyNecessaryFeatureDone: false)
+        patch("/projects/$projectIdentifier/ended", endingCondition)
+        verifyReportWasSent(projectIdentifier)
+
+        when:
+        def response = patch("/projects/$projectIdentifier/ended", endingCondition)
+
+        then:
+        response.statusCode == UNPROCESSABLE_ENTITY
+        response.body.errorCode == 40022
+        verifyReportWasSent(projectIdentifier)
+    }
+
+    def "Should not end a nonexistent project"() {
+        given:
+        stubReportingService()
+        def endingCondition = new ProjectEndingCondition(onlyNecessaryFeatureDone: false)
+
+        when:
+        def response = patch('/projects/nonexistent project/ended', endingCondition)
+
+        then:
+        response.statusCode == NOT_FOUND
+        response.body.errorCode ==  40016
+        verifyReportWasNotSent('nonexistent project')
+    }
 
 
 }

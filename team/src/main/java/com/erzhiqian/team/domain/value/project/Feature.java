@@ -58,4 +58,16 @@ public class Feature {
     public boolean hasInvalidStatus() {
         return hasStatus() && status.isInvalid();
     }
+
+    public boolean isNecessary() {
+        return hasRequirement() && requirement.isNecessary();
+    }
+
+    public boolean isInProgress() {
+        return hasStatus() && status.isAtInProgress();
+    }
+
+    public boolean isNecessaryAndUnDone() {
+        return isNecessary() && isInProgress();
+    }
 }

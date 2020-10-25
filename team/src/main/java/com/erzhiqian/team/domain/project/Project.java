@@ -1,6 +1,7 @@
 package com.erzhiqian.team.domain.project;
 
 import com.erzhiqian.team.domain.team.Team;
+import com.erzhiqian.team.domain.value.project.EndedProject;
 import com.erzhiqian.team.domain.value.project.Feature;
 import com.erzhiqian.team.domain.value.project.Status;
 import lombok.Getter;
@@ -10,8 +11,7 @@ import java.util.List;
 
 import static com.erzhiqian.team.domain.exceptions.DomainPreCondition.when;
 import static com.erzhiqian.team.domain.exceptions.ErrorCode.*;
-import static com.erzhiqian.team.domain.value.project.Status.IN_PROGRESS;
-import static com.erzhiqian.team.domain.value.project.Status.TO_DO;
+import static com.erzhiqian.team.domain.value.project.Status.*;
 import static org.apache.commons.collections4.ListUtils.emptyIfNull;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
@@ -133,4 +133,22 @@ public class Project {
     }
 
 
+    public EndedProject end(FeatureChecker featureChecker) {
+        String message = "Error starting '" + identifier + "' project";
+        requireStarted(message);
+        featureChecker.checkFeatures(features, message);
+        setStatus(DONE);
+        return new EndedProject(identifier);
+    }
+
+    private void requireStarted(String message) {
+        when(status.isNotStarted())
+                .thenInvalidEntity(UNSTARTED_PROJECT, message);
+        when(status.isDone())
+                .thenInvalidEntity(PROJECT_ALREADY_ENDED, message);
+    }
+
+    public boolean hasAssignedTeam() {
+        return !isBlank(assignedTeam);
+    }
 }

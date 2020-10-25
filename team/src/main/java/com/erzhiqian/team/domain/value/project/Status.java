@@ -13,4 +13,18 @@ public enum Status {
     public boolean isAtLeastStarted() {
         return   !isInvalid() &&  this != TO_DO;
     }
+
+    public boolean isAtInProgress() {
+        return this == IN_PROGRESS;
+    }
+
+    public boolean isNotStarted() {
+        return this == TO_DO;
+    }
+
+
+    public boolean isDone() {
+        return this == DONE;
+    }
+    
 }
